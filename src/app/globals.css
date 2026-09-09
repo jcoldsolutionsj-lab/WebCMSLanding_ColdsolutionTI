@@ -1,0 +1,142 @@
+/* 04_UX_UI_GUIDELINES.md - DESIGN TOKENS & FLUID RESPONSIVE SYSTEM */
+
+:root {
+  /* Fondo base y superficies */
+  --bg-main: #0A1526;
+  --bg-elevated: #101F35;
+  
+  /* Textos */
+  --text-main: #F5F7FA;
+  --text-secondary: #9FB0C3;
+  
+  /* Acentos y CTA */
+  --accent-primary: #1EA7FF;
+  --accent-glow: rgba(30, 167, 255, 0.25);
+  --cta-whatsapp: #25D366;
+  --cta-whatsapp-hover: #1DA851;
+  
+  /* Bordes */
+  --border-subtle: #1A2D4A;
+  
+  /* Tipografía */
+  --font-heading: var(--font-inter), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+
+  /* Fluid Typography Tokens (clamp) */
+  --font-size-xs: clamp(0.75rem, 0.8vw, 0.875rem);
+  --font-size-sm: clamp(0.85rem, 0.95vw, 0.95rem);
+  --font-size-body: clamp(0.95rem, 1.1vw, 1.1rem);
+  --font-size-h4: clamp(1.1rem, 1.4vw, 1.35rem);
+  --font-size-h3: clamp(1.25rem, 2vw, 1.75rem);
+  --font-size-h2: clamp(1.75rem, 3.2vw, 2.5rem);
+  --font-size-h1: clamp(2.1rem, 4.5vw, 3.25rem);
+
+  /* Fluid Spacing Tokens */
+  --spacing-xs: clamp(0.25rem, 0.8vw, 0.5rem);
+  --spacing-sm: clamp(0.5rem, 1.5vw, 1rem);
+  --spacing-md: clamp(1rem, 2.5vw, 2rem);
+  --spacing-lg: clamp(2rem, 4vw, 3.5rem);
+  --spacing-xl: clamp(3rem, 6vw, 5.5rem);
+
+  /* Container Widths & Layout Tokens */
+  --container-max-width: min(1200px, 92vw);
+  --container-padding: clamp(1rem, 3vw, 2.5rem);
+  --border-radius-card: clamp(8px, 1.5vw, 16px);
+  --border-radius-pill: 9999px;
+
+  /* Breakpoint Tokens Reference */
+  --breakpoint-mobile-max: 428px;
+  --breakpoint-tablet-min: 429px;
+  --breakpoint-tablet-max: 1024px;
+  --breakpoint-desktop-min: 1025px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 85%; /* 85% compact scale for high-density executive UI */
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Image & Media Resilience (Doc 10 §2 - Prevents CLS & Overflow) */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { 
+  font-size: var(--font-size-h2);
+  color: var(--text-main);
+  background: linear-gradient(90deg, #ffffff 0%, var(--accent-primary, #1ea7ff) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+h3 { font-size: var(--font-size-h3); }
+h4 { font-size: var(--font-size-h4); }
+
+::selection {
+  background-color: var(--accent-primary);
+  color: #fff;
+}
+
+/* Global Radar Pulse Indicator for Section Titles */
+.pulseDot {
+  display: inline-block;
+  -webkit-text-fill-color: initial;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1ea7ff;
+  box-shadow: 0 0 12px #1ea7ff;
+  animation: pulseDotGlobal 2s infinite ease-in-out;
+  margin-right: 12px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+@keyframes pulseDotGlobal {
+  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px #1ea7ff; }
+  50% { transform: scale(1.4); opacity: 0.6; box-shadow: 0 0 20px #1ea7ff, 0 0 30px rgba(30, 167, 255, 0.4); }
+  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px #1ea7ff; }
+}
+
+@keyframes brandCursorBlink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}

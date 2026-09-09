@@ -1,0 +1,163 @@
+.container {
+  padding: var(--spacing-xl) var(--spacing-md);
+  width: 100%;
+  background-color: var(--bg-elevated);
+  background-image: radial-gradient(circle at center, rgba(0, 229, 255, 0.18) 0%, rgba(10, 21, 38, 0.95) 100%), url('/asset/VideosAtmosfericos/value-prop-bg.webp');
+  background-size: cover;
+  background-position: center;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.heading {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-main);
+}
+
+.description {
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+  max-width: min(700px, 90%);
+  margin: 0 auto var(--spacing-lg);
+  line-height: 1.6;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.feature {
+  flex: 1;
+  min-width: min(100%, 240px);
+  padding: var(--spacing-md);
+  background: rgba(16, 31, 53, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-card, 16px);
+  transition: transform 0.4s ease, border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Spotlight Active Card Styling */
+.featureSpotlight {
+  background: rgba(16, 35, 60, 0.85);
+  border-color: #00e5ff;
+  box-shadow: 0 10px 30px rgba(0, 229, 255, 0.25), inset 0 0 20px rgba(0, 229, 255, 0.12);
+}
+
+/* Top Spotlight Light Beam Effect */
+.spotlightBeam {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 120px;
+  background: radial-gradient(ellipse at top, rgba(0, 229, 255, 0.45) 0%, rgba(30, 167, 255, 0.15) 45%, transparent 75%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Spotlight Active Badge */
+.spotlightBadge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 229, 255, 0.15);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: #00e5ff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.spotlightDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff;
+  animation: pulseDot 1.5s infinite;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  background: rgba(30, 167, 255, 0.08);
+}
+
+.featureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-primary);
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.iconIlluminated {
+  color: #00e5ff;
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 18px #00e5ff);
+}
+
+.feature:hover .featureIcon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 15px var(--accent-glow));
+}
+
+.featureTitle {
+  font-size: var(--font-size-h4);
+  color: var(--text-main);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
+  position: relative;
+  z-index: 2;
+}
+
+.featureText {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  min-height: 2.8em;
+  position: relative;
+  z-index: 2;
+}
+
+/* Typewriter Caret / Cursor */
+.typewriterCaret {
+  display: inline-block;
+  color: #00e5ff;
+  font-weight: bold;
+  margin-left: 2px;
+  animation: blinkCaret 0.8s infinite;
+}
+
+@keyframes blinkCaret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
