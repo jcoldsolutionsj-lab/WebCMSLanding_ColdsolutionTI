@@ -1,0 +1,101 @@
+.container {
+  padding: clamp(4rem, 8vw, 6.5rem) var(--spacing-md);
+  width: 100%;
+  background-color: #050b14;
+  background-image: 
+    radial-gradient(circle at center, rgba(30, 167, 255, 0.16) 0%, rgba(5, 11, 20, 0.9) 100%),
+    url('/images/backgrounds/final_cta_tech_bg.png');
+  background-size: cover;
+  background-position: center;
+  border-top: 1px solid rgba(30, 167, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.heading {
+  text-align: center;
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-main);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 550px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-card);
+  padding: var(--spacing-md);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.icon {
+  font-size: var(--font-size-h2);
+}
+
+.clientName {
+  font-size: var(--font-size-h3);
+  color: var(--text-main);
+}
+
+.summary {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-sm);
+}
+
+.highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: auto;
+}
+
+.highlights li {
+  color: var(--accent-primary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.highlights li::before {
+  content: '✓';
+}
