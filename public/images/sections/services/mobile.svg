@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220" fill="none">
+  <rect width="400" height="220" rx="12" fill="#101F35" stroke="#1A2D4A" stroke-width="2"/>
+  <!-- Smartphone Outline -->
+  <rect x="150" y="20" width="100" height="180" rx="16" fill="#0A1526" stroke="#1EA7FF" stroke-width="2"/>
+  <rect x="180" y="28" width="40" height="6" rx="3" fill="#1A2D4A"/>
+  <!-- Mobile App UI -->
+  <rect x="160" y="45" width="80" height="30" rx="6" fill="#101F35"/>
+  <rect x="160" y="83" width="80" height="40" rx="6" fill="#101F35" stroke="#1EA7FF" stroke-opacity="0.4"/>
+  <rect x="160" y="130" width="80" height="40" rx="6" fill="#101F35" stroke="#1EA7FF" stroke-opacity="0.4"/>
+  <circle cx="200" cy="188" r="5" stroke="#1EA7FF" stroke-width="1.5"/>
+</svg>

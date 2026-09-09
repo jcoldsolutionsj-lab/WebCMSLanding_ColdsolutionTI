@@ -1,0 +1,91 @@
+.container {
+  padding: var(--spacing-xl) var(--spacing-md);
+  width: 100%;
+  background-color: var(--bg-main);
+}
+
+.content {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.grid {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: min(100%, 260px);
+  max-width: 380px;
+  background-color: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-card);
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.card:nth-child(2) {
+  border-color: var(--accent-primary);
+  background-color: rgba(30, 167, 255, 0.05);
+  animation: pulseGlowStatic 4s infinite ease-in-out;
+  animation-delay: 1.3s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 2.6s;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(30, 167, 255, 0);
+  }
+  15% {
+    box-shadow: 0 0 25px 5px rgba(30, 167, 255, 0.4);
+    border-color: var(--accent-primary);
+  }
+  35% {
+    box-shadow: 0 0 0 rgba(30, 167, 255, 0);
+  }
+}
+
+@keyframes pulseGlowStatic {
+  0%, 100% {
+    box-shadow: 0 0 15px 2px rgba(30, 167, 255, 0.3); /* Static base glow */
+  }
+  15% {
+    box-shadow: 0 0 30px 8px rgba(30, 167, 255, 0.6); /* Brighter pulse */
+  }
+  35% {
+    box-shadow: 0 0 15px 2px rgba(30, 167, 255, 0.3); /* Back to static base glow */
+  }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  /* Use !important to override the animation's box shadow on hover */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px 5px rgba(30, 167, 255, 0.6) !important;
+  animation-play-state: paused;
+}
+
+.cardTitle {
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-main);
+}
+
+.cardDescription {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+}

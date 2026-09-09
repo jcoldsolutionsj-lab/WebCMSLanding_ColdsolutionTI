@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="220" viewBox="0 0 400 220" fill="none">
+  <rect width="400" height="220" rx="12" fill="#101F35" stroke="#1A2D4A" stroke-width="2"/>
+  <rect x="40" y="25" width="320" height="170" rx="8" fill="#0A1526" stroke="#1EA7FF" stroke-width="1.5" stroke-opacity="0.5"/>
+  <!-- Browser Header -->
+  <rect x="40" y="25" width="320" height="25" rx="8" fill="#1A2D4A"/>
+  <circle cx="56" cy="37" r="3.5" fill="#FF5F56"/>
+  <circle cx="68" cy="37" r="3.5" fill="#FFBD2E"/>
+  <circle cx="80" cy="37" r="3.5" fill="#27C93F"/>
+  <rect x="100" y="31" width="180" height="12" rx="6" fill="#101F35"/>
+  <text x="190" y="40" text-anchor="middle" fill="#9FB0C3" font-family="sans-serif" font-size="9">https://tu-empresa.com</text>
+  <!-- Landing Mockup -->
+  <rect x="55" y="60" width="290" height="40" rx="4" fill="#101F35"/>
+  <rect x="70" y="70" width="100" height="8" rx="4" fill="#1EA7FF"/>
+  <rect x="70" y="83" width="140" height="6" rx="3" fill="#9FB0C3" opacity="0.6"/>
+  <rect x="250" y="68" width="80" height="24" rx="4" fill="#1EA7FF"/>
+  <text x="290" y="84" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="10" font-weight="700">CMS Web</text>
+  <!-- Content Cards -->
+  <rect x="55" y="110" width="90" height="70" rx="4" fill="#101F35" stroke="#1EA7FF" stroke-opacity="0.3"/>
+  <rect x="155" y="110" width="90" height="70" rx="4" fill="#101F35" stroke="#1EA7FF" stroke-opacity="0.3"/>
+  <rect x="255" y="110" width="90" height="70" rx="4" fill="#101F35" stroke="#1EA7FF" stroke-opacity="0.3"/>
+</svg>

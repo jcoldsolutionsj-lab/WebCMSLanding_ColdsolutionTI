@@ -1,0 +1,321 @@
+.widgetWrapper {
+  position: fixed;
+  bottom: calc(clamp(68px, 7vw, 80px) + 3rem);
+  right: clamp(1.2rem, 3vw, 2rem);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Floating Phone Button */
+.buttonContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floatingButton {
+  position: relative;
+  z-index: 2;
+  width: clamp(68px, 7vw, 80px);
+  height: clamp(68px, 7vw, 80px);
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: white;
+}
+
+.floatingButton.isOpen {
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid rgba(30, 167, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(30, 167, 255, 0.3);
+  color: #1ea7ff;
+  width: clamp(52px, 5.5vw, 60px);
+  height: clamp(52px, 5.5vw, 60px);
+}
+
+.floatingButton.isOpen:hover {
+  background: rgba(220, 38, 38, 0.9);
+  border-color: #ef4444;
+  color: white;
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.5);
+}
+
+.floatingButton:hover {
+  transform: scale(1.1);
+}
+
+.phoneImgIcon {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(30, 167, 255, 0.5));
+  transition: filter 0.3s ease;
+}
+
+.floatingButton:hover .phoneImgIcon {
+  filter: drop-shadow(0 8px 24px rgba(30, 167, 255, 0.8));
+}
+
+/* Radar Pulse Animations */
+.radarRing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(30, 167, 255, 0.8);
+  animation: phoneRadarPulse 2.2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes phoneRadarPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Modal Window */
+.phoneWindow {
+  position: absolute;
+  bottom: 86px;
+  right: 0;
+  width: min(340px, calc(100vw - 2.5rem));
+  background: #0f172a;
+  border: 1px solid rgba(30, 167, 255, 0.3);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65), 0 0 30px rgba(30, 167, 255, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 10000;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+/* Header */
+.phoneHeader {
+  background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.headerIconWrapper {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(30, 167, 255, 0.2);
+  border: 1.5px solid rgba(30, 167, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1px 0;
+}
+
+.headerSubtitle {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Channels List */
+.channelsList {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.channelsList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.channelsList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.channelRow {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.channelRow:hover {
+  background: rgba(30, 167, 255, 0.1);
+  border-color: rgba(30, 167, 255, 0.35);
+}
+
+.channelIconBg {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(30, 167, 255, 0.15);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.channelInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.channelLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.channelPhone {
+  font-size: 11px;
+  font-weight: 500;
+  color: #38bdf8;
+  margin: 1px 0 0 0;
+}
+
+.actionsGroup {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.callIconBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.callIconBtn:hover {
+  background: #0284c7;
+  color: white;
+  border-color: #0284c7;
+  transform: scale(1.08);
+}
+
+.wsIconBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(37, 211, 102, 0.15);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  color: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.wsIconBtn:hover {
+  background: #25d366;
+  color: white;
+  border-color: #25d366;
+  transform: scale(1.08);
+}
+
+@media (max-width: 480px) {
+  .phoneWindow {
+    width: calc(100vw - 2.5rem);
+    right: -0.5rem;
+  }
+}
+
+/* Speech Bubble / Tooltip */
+.speechBubble {
+  position: absolute;
+  bottom: 88px;
+  right: 0;
+  background: #0f172a;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 9998;
+}
+
+.speechBubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  right: 22px;
+  width: 10px;
+  height: 10px;
+  background: #0f172a;
+  border-right: 1px solid rgba(56, 189, 248, 0.4);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.4);
+  transform: rotate(45deg);
+}
+
+.bubbleClose {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.bubbleClose:hover {
+  color: white;
+}
