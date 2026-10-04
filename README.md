@@ -18,7 +18,7 @@ Asegúrate de tener el archivo `backend/.env` creado (puedes basarte en `backend
 
 1. Abre una terminal y entra a la carpeta del backend:
 ```powershell
-cd backend
+cd backend 
 ```
 2. Activa el entorno virtual (solo la primera vez o si cerraste la terminal):
 ```powershell

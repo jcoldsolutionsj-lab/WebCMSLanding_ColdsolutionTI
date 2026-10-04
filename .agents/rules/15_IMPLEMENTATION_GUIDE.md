@@ -23,16 +23,16 @@ description: Guía de implementación por fases, con el estado actual del proyec
 5. Preparar la llamada asíncrona al webhook de n8n.
 6. Guardar variables en un `.env`.
 
-### Fase 2: n8n y Notificaciones (FUTURA)
-1. Provisionar n8n con Docker.
-2. Crear flujo de n8n: Webhook → Telegram → Gmail → Calendar (doc. 09).
-3. Conectar el backend con n8n de forma segura usando un token.
-
-### Fase 3: Ajustes de Interfaz y Formulario (FUTURA)
+### Fase 2: Ajustes de Interfaz y Formulario (EN ESPERA)
 1. Modificar el formulario en React (`ContactSection.tsx`) para incluir el selector de servicios traído de la API.
 2. Agregar campo de consentimiento y enlazar a las futuras páginas de legales.
 3. Asegurar que los campos opcionales/obligatorios coincidan con la regla 09.
 4. Corregir el teléfono "945 430 358" a "945 430 381" en toda la UI.
+
+### Fase 3: n8n y Notificaciones (FUTURA)
+1. Provisionar n8n con Docker.
+2. Crear flujo de n8n: Webhook → Telegram → Gmail → Calendar (doc. 09).
+3. Conectar el backend con n8n de forma segura usando un token.
 
 ### Fase 4: Tracking y UTM (FUTURA)
 1. Capturar y enviar `utm_*` y `gclid` al backend.
