@@ -34,8 +34,8 @@ const phoneChannels = [
   {
     id: 'tecnologia',
     label: 'Consultor Tecnología',
-    phone: '945 430 358',
-    cleanPhone: '51945430358',
+    phone: '945 430 381',
+    cleanPhone: '51945430381',
     icon: <Cpu size={18} />,
     wsMessage: '¡Hola! Quisiera hablar con un Consultor de Tecnología para evaluar una arquitectura o proyecto.',
   },

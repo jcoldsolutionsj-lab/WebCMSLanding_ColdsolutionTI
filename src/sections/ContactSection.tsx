@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   User, 
@@ -11,25 +11,45 @@ import {
   Send, 
   CheckCircle2, 
   ShieldCheck, 
-  Clock 
+  Clock,
+  Briefcase
 } from 'lucide-react';
 import styles from './ContactSection.module.css';
 import { MagneticButton } from '@/components/MagneticButton';
 
+interface Servicio {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  orden: number;
+}
+
 export const ContactSection = () => {
+  const [servicios, setServicios] = useState<Servicio[]>([]);
   const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    phone: '',
-    email: '',
-    problem: '',
+    nombre: '',
+    empresa: '',
+    telefono: '',
+    correo: '',
+    servicio_id: '',
+    problema: '',
+    consentimiento: false,
   });
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // Fetch servicios al cargar el componente
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/servicios')
+      .then(res => res.json())
+      .then(data => setServicios(data))
+      .catch(err => console.error("Error al cargar servicios:", err));
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,13 +60,17 @@ export const ContactSection = () => {
     try {
       const payload = {
         ...formData,
+        servicio_id: parseInt(formData.servicio_id),
         captcha_token: 'dummy-token-for-now',
         utm_source: typeof window !== 'undefined' ? sessionStorage.getItem('utm_source') : null,
         utm_medium: typeof window !== 'undefined' ? sessionStorage.getItem('utm_medium') : null,
         utm_campaign: typeof window !== 'undefined' ? sessionStorage.getItem('utm_campaign') : null,
+        utm_term: typeof window !== 'undefined' ? sessionStorage.getItem('utm_term') : null,
+        utm_content: typeof window !== 'undefined' ? sessionStorage.getItem('utm_content') : null,
+        gclid: typeof window !== 'undefined' ? sessionStorage.getItem('gclid') : null,
       };
 
-      const response = await fetch('http://localhost:8000/api/leads', {
+      const response = await fetch('http://127.0.0.1:8000/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -60,7 +84,7 @@ export const ContactSection = () => {
       }
 
       setStatus('success');
-      setFormData({ name: '', company: '', phone: '', email: '', problem: '' });
+      setFormData({ nombre: '', empresa: '', telefono: '', correo: '', servicio_id: '', problema: '', consentimiento: false });
       
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         (window as any).dataLayer.push({ event: 'lead_created' });
@@ -121,7 +145,6 @@ export const ContactSection = () => {
             Explícanos qué está pasando en tu negocio y te ayudaremos a encontrar la solución tecnológica proporcional a tu necesidad.
           </p>
 
-
           
           {status === 'success' ? (
             <motion.div 
@@ -141,31 +164,31 @@ export const ContactSection = () => {
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="name">
+                  <label htmlFor="nombre">
                     <User size={14} className={styles.inputIcon} /> Tu Nombre *
                   </label>
                   <input 
                     type="text" 
-                    id="name" 
-                    name="name" 
+                    id="nombre" 
+                    name="nombre" 
                     placeholder="Ej. Juan Pérez"
                     required 
-                    value={formData.name} 
+                    value={formData.nombre} 
                     onChange={handleChange} 
                     disabled={status === 'loading'} 
                   />
                 </div>
                 
                 <div className={styles.formGroup}>
-                  <label htmlFor="company">
+                  <label htmlFor="empresa">
                     <Building2 size={14} className={styles.inputIcon} /> Empresa / Negocio
                   </label>
                   <input 
                     type="text" 
-                    id="company" 
-                    name="company" 
+                    id="empresa" 
+                    name="empresa" 
                     placeholder="Nombre de tu empresa (opcional)"
-                    value={formData.company} 
+                    value={formData.empresa} 
                     onChange={handleChange} 
                     disabled={status === 'loading'} 
                   />
@@ -174,31 +197,31 @@ export const ContactSection = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="phone">
+                  <label htmlFor="telefono">
                     <Phone size={14} className={styles.inputIcon} /> Teléfono / WhatsApp *
                   </label>
                   <input 
                     type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    placeholder="Ej. 963 478 502"
+                    id="telefono" 
+                    name="telefono" 
+                    placeholder="Ej. 945 430 381"
                     required 
-                    value={formData.phone} 
+                    value={formData.telefono} 
                     onChange={handleChange} 
                     disabled={status === 'loading'} 
                   />
                 </div>
                 
                 <div className={styles.formGroup}>
-                  <label htmlFor="email">
+                  <label htmlFor="correo">
                     <Mail size={14} className={styles.inputIcon} /> Correo electrónico
                   </label>
                   <input 
                     type="email" 
-                    id="email" 
-                    name="email" 
+                    id="correo" 
+                    name="correo" 
                     placeholder="correo@empresa.com (opcional)"
-                    value={formData.email} 
+                    value={formData.correo} 
                     onChange={handleChange} 
                     disabled={status === 'loading'} 
                   />
@@ -206,19 +229,56 @@ export const ContactSection = () => {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="problem">
+                <label htmlFor="servicio_id">
+                  <Briefcase size={14} className={styles.inputIcon} /> Servicio de interés *
+                </label>
+                <select 
+                  id="servicio_id" 
+                  name="servicio_id" 
+                  required 
+                  value={formData.servicio_id} 
+                  onChange={handleChange} 
+                  disabled={status === 'loading' || servicios.length === 0}
+                  className={styles.selectInput}
+                >
+                  <option value="" disabled>Selecciona el servicio que necesitas</option>
+                  {servicios.map(servicio => (
+                    <option key={servicio.id} value={servicio.id}>
+                      {servicio.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="problema">
                   <MessageSquare size={14} className={styles.inputIcon} /> ¿Qué está pasando en tu negocio? *
                 </label>
                 <textarea 
-                  id="problem" 
-                  name="problem" 
+                  id="problema" 
+                  name="problema" 
                   rows={4} 
                   placeholder="Describe brevemente tus procesos manuales, excesos de Excel, falta de reportes o la solución que requieres..."
                   required 
-                  value={formData.problem} 
+                  value={formData.problema} 
                   onChange={handleChange} 
                   disabled={status === 'loading'}
                 ></textarea>
+              </div>
+
+              <div className={styles.checkboxGroup}>
+                <input 
+                  type="checkbox" 
+                  id="consentimiento" 
+                  name="consentimiento" 
+                  required 
+                  checked={formData.consentimiento} 
+                  onChange={handleChange} 
+                  disabled={status === 'loading'}
+                />
+                <label htmlFor="consentimiento">
+                  Acepto las <a href="/privacidad" target="_blank" rel="noopener noreferrer">políticas de privacidad</a> y el tratamiento de mis datos. *
+                </label>
               </div>
               
               {status === 'error' && (
@@ -236,4 +296,3 @@ export const ContactSection = () => {
     </section>
   );
 };
-

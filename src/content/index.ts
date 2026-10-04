@@ -173,7 +173,7 @@ export const caseStudies: CaseStudy[] = [
 export const contactChannels: ContactChannel[] = [
   { type: "whatsapp", label: "WhatsApp General", phone_number: "963 478 502" },
   { type: "comercial", label: "Comercial y Ventas", phone_number: "963 478 502" },
-  { type: "tecnologia", label: "Consultor Tecnología", phone_number: "945 430 358" },
+  { type: "tecnologia", label: "Consultor Tecnología", phone_number: "945 430 381" },
   { type: "soporte", label: "Soporte Aplicaciones", phone_number: "992 609 046" }
 ];
 
