@@ -1,77 +1,60 @@
-﻿# Web CMS Landing - ColdSolution TI
+# Web CMS Landing - ColdSolutions TI
 
-Este repositorio contiene la Landing Page principal y el CMS de **ColdSolution TI**.
+Este repositorio contiene la Landing Page y el Backend de **ColdSolutions TI**.
 
-## Estado del Proyecto (Avance Actual)
-
-### ✅ Lo que ya está implementado (Frontend - Next.js)
-- **Estructura Base:** Inicialización de Next.js 15 (Turbopack) con React 19 y arquitectura de carpetas (src/sections, src/components).
-- **Sistema de Diseño (UI/UX):** 
-  - CSS Modules para modularidad estricta (sin Tailwind).
-  - Tema oscuro moderno con acentos "Electric Cyan" (Branding).
-  - Efectos visuales avanzados: Glassmorphism, bordes gradientes, fondos con partículas/nodos (Hero), y cards tridimensionales (TiltCard).
-  - Cursor de marca personalizado (CursorGlow.tsx) con físicas spring (anillo y punto brillante).
-- **Secciones Completadas (Landing Page):**
-  - **HeroSection:** Animaciones de entrada escalonadas, teclado dinámico.
-  - **ValuePropositionSection:** Características con iconos iluminados, texto tipo máquina de escribir.
-  - **PainPointsSection:** Identificación de dolores del cliente con modales emergentes y tarjetas magnéticas.
-  - **DeepDiveSection:** Carrusel infinito para "Especialidades".
-  - **ServicesSection:** Presentación de 8 servicios con diseño expandible/colapsable y sub-niveles.
-  - **ProcessSection / SolutionTiers / CaseStudies:** Flujos interactivos.
-  - **Footer:** Diseño a 4 columnas sin bordes, con Tooltip interactivo para el nuevo dominio y la historia de la empresa (15 años de experiencia).
-- **Animaciones Globales:** 
-  - Componente genérico ScrollReveal.tsx implementado.
-  - Animaciones de scroll (once: false) configuradas en toda la página (subida y bajada).
-
-### 🚧 Lo que falta (Pendiente)
-- **Integración Backend:** Conectar el Frontend con el CMS y la API de Django/FastAPI (backend en desarrollo/planificación).
-- **Formularios de Contacto:** Lógica funcional para capturar leads (correos, validaciones, conexión con base de datos o CRM).
-- **Contenidos Finales:** Reemplazar textos placeholders o imágenes temporales (si los hay) por los assets de marketing definitivos (por ejemplo, el dominio real).
-- **Optimización SEO Avanzada:** Sitemaps automáticos y meta tags dinámicas conectadas al CMS.
-- **Despliegue (Deploy):** Configurar CI/CD para producción en Vercel, AWS u otro proveedor.
-
----
-## Frontend (web - Next.js)
-Servidor de desarrollo local:
-```bash
-npm run dev
-```
-
-Aperturar Frontend en Red Local (para ver desde celular/tablet en la misma red Wi-Fi):
-```bash
-npx next dev -H 0.0.0.0 -p 3000
-```
+## Arquitectura Actual
+- **Frontend:** Next.js (SSG/Static Export).
+- **Backend:** FastAPI (Python) conectado a base de datos PostgreSQL.
+- **Base de Datos:** PostgreSQL alojada en Render (instancia compartida, schema `app`).
+- **Automatización (Próximamente):** Webhooks hacia n8n para notificaciones en Telegram, Gmail y Google Calendar.
 
 ---
 
-## Backend (api - FastAPI / Python)
-1. Entra a la carpeta del backend:
-```bash
+## 🚀 Cómo ejecutar el proyecto en tu PC (Modo Desarrollo)
+
+### 1. Levantar el Backend (FastAPI)
+El backend actualmente se conecta a la base de datos de producción/desarrollo en **Render**.
+Asegúrate de tener el archivo `backend/.env` creado (puedes basarte en `backend/.env.example`).
+
+1. Abre una terminal y entra a la carpeta del backend:
+```powershell
 cd backend
 ```
-
-2. Crea el entorno virtual (si no estaba creado):
-```bash
-python -m venv .venv
-```
-
-3. Activa el entorno virtual (Windows PowerShell):
+2. Activa el entorno virtual (solo la primera vez o si cerraste la terminal):
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
-
-4. Instala las dependencias:
-```bash
-pip install -r requirements.txt
-```
-
-5. Levanta la API localmente:
-```bash
+3. Inicia el servidor:
+```powershell
 uvicorn main:app --reload
 ```
+*La API estará disponible en [http://localhost:8000/docs](http://localhost:8000/docs).*
 
-6. Aperturar API en Red Local (para conectar desde dispositivos mÃ³viles en la misma red):
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+*(Nota: Si deseas probar desde tu celular en la misma red WiFi, usa `uvicorn main:app --host 0.0.0.0 --port 8000 --reload`)*
+
+### 2. Levantar el Frontend (Next.js)
+El frontend consumirá los endpoints locales del backend (`http://localhost:8000/api/...`).
+
+1. Abre una **nueva terminal** en la raíz del proyecto.
+2. Inicia el servidor de React:
+```powershell
+npm run dev
+```
+*La web estará disponible en [http://localhost:3000](http://localhost:3000).*
+
+*(Nota: Para ver la web desde tu celular en la misma red, usa `npx next dev -H 0.0.0.0 -p 3000`)*
+
+---
+
+## 🛠 Comandos útiles de Base de Datos (Alembic)
+Si haces cambios en los modelos de base de datos (`backend/models.py`), debes crear una migración:
+
+```powershell
+cd backend
+.\.venv\Scripts\Activate.ps1
+# Generar la migración:
+alembic revision --autogenerate -m "Descripción del cambio"
+# Aplicar los cambios a Render:
+alembic upgrade head
 ```
 
