@@ -1,16 +1,15 @@
-# 14. CONTENT MODEL
+---
+trigger: model_decision
+description: Esquema de base de datos PostgreSQL (tablas de leads, servicios y logs). Leer para escribir modelos SQLAlchemy o consultar relaciones.
+---
+
+# 14. CONTENT MODEL & DATABASE SCHEMA
 
 ## Propósito
-Definir la forma de los datos de contenido, tanto para la capa de contenido local de la fase 1 (doc. 13 §4) como para anticipar los modelos que eventualmente existirán en Django (doc. 12). **No se crean modelos Django reales en esta fase** — solo se define la forma conceptual de las entidades.
+Definir la estructura de la base de datos PostgreSQL y los modelos transaccionales de la fase 1. Todo cambio se realiza mediante migraciones versionadas (Alembic).
 
-## 1. HeroContent (DEFINIDO, contenido real en doc. 02 §1)
-```text
-HeroContent
-- title: string           → propuesta de valor principal
-- subtitle: string        → texto de apoyo
-- primary_cta_label: string
-- primary_cta_type: enum(whatsapp | form)
-```
+## 1. Tablas de Frontend (Capa local)
+El contenido visual (Hero, Casos de éxito, Proceso, Tiers) se mantiene como JSON/TS local en `/content` (ver doc. 13). No requiere tablas en Postgres en esta fase.
 
 ## 2. PainPoint (DEFINIDO, 8 registros reales — doc. 02 §2)
 ```text
@@ -73,25 +72,54 @@ FAQItem
 ```
 Módulo definido en el modelo pero **sin registros** hasta que el cliente entregue contenido real (doc. 03).
 
-## 9. Lead (PROPUESTO — entidad transaccional, no de contenido editorial, doc. 09)
+## 2. Modelos de Base de Datos (PostgreSQL, Schema `app`)
+Implementación con **SQLAlchemy** en el backend.
+
+### Tabla: `servicios` (Catálogo)
 ```text
-Lead
-- name: string
-- company: string
-- phone: string
-- email: string
-- message: string
-- request_type: enum(diagnostico | cotizacion)   → PENDIENTE de confirmación, doc. 06 §2
-- utm_source, utm_medium, utm_campaign, utm_content, utm_term: string (nullable)
-- status: enum(nuevo | contactado | en_diagnostico | propuesta_enviada | ganado | perdido)  → doc. 06 §7
-- created_at: datetime
+- id: int (PK)
+- nombre: varchar(100)
+- descripcion: text
+- orden: int
+- activo: boolean
 ```
 
-## 10. SEOMetadata (PROPUESTO, por sección/página futura — doc. 05)
+### Tabla: `leads` (Principal)
 ```text
-SEOMetadata
-- page_or_section_id: string
-- meta_title: string
-- meta_description: string
-- og_image: string
+- id: int (PK)
+- nombre: varchar(150)
+- empresa: varchar(150) (nullable)
+- telefono: varchar(50)
+- correo: varchar(150) (nullable)
+- servicio_id: int (FK -> servicios.id)
+- problema: text
+- consentimiento: boolean
+- consentimiento_ip: varchar(45)
+- estado: varchar(50)  (nuevo | contactado | propuesta | ganado | perdido)
+- created_at: timestamp
+- updated_at: timestamp
+```
+
+### Tabla: `leads_tracking` (Orígenes)
+```text
+- lead_id: int (PK, FK -> leads.id)
+- utm_source: varchar(100)
+- utm_medium: varchar(100)
+- utm_campaign: varchar(100)
+- utm_term: varchar(100)
+- utm_content: varchar(100)
+- gclid: varchar(255)
+```
+
+### Tabla: `notificaciones_log`
+Para auditar llamadas al webhook de n8n.
+```text
+- id: int (PK)
+- lead_id: int (FK -> leads.id)
+- canal: varchar(50)  (ej. 'webhook_n8n')
+- payload_enviado: jsonb
+- respuesta_http: int
+- error_detalle: text
+- exito: boolean
+- created_at: timestamp
 ```

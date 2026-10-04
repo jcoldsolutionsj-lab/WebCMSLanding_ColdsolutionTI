@@ -1,54 +1,62 @@
-# 01. PROJECT CONTEXT — ColdSolutions TI Landing Page
+---
+trigger: model_decision
+description: Contexto de negocio de ColdSolutions TI (identidad, teléfonos, público, objetivo y alcance actual). Leer antes de decidir contenido, alcance o datos de contacto.
+---
 
-## Propósito de este documento
-Establecer el contexto de negocio y de proyecto que debe guiar todas las decisiones técnicas posteriores. Este es el primer documento que debe leer el agente implementador (Gemini 3.1 Pro / Antigravity).
+# 01. PROJECT CONTEXT: ColdSolutions TI
+
+> Actualizado: 2026-10-03 (Fase 0). Reemplaza la versión inicial, que dejaba n8n y las notificaciones fuera de alcance.
 
 ## 1. Identidad de la empresa (DEFINIDO)
-- **Nombre comercial:** ColdSolutions TI
-- **Tagline:** "Soluciones tecnológicas que impulsan tu negocio"
-- **Categoría de negocio:** empresa de servicios tecnológicos B2B (software, automatización, datos, IA, web, apps, integración, consultoría).
-- **Posicionamiento discursivo (extraído del brochure):** "No necesitas saber qué tecnología necesitas. Cuéntanos qué está pasando en tu negocio y te ayudamos a encontrar una solución." — enfoque **problema-primero**, no herramienta-primero.
-- **Canales de contacto (DEFINIDO, ver contradicción en sección 5):**
-  - Soporte TI: 992 609 046
-  - Tecnología: 945 430 358
-  - Comercial: 963 478 502
-  - WhatsApp (destacado en pieza gráfica principal): 992 609 046
+- **Nombre oficial:** ColdSolutions TI (siempre en plural, en textos, metadatos y logos).
+- **Tagline:** "Soluciones tecnológicas que impulsan tu negocio".
+- **Categoría:** servicios tecnológicos (software, automatización, datos, IA, web, apps, integración, consultoría).
+- **Posicionamiento:** "No necesitas saber qué tecnología necesitas. Cuéntanos qué está pasando en tu negocio y te ayudamos a encontrar una solución." Enfoque **problema-primero**.
+- **Dominio:** `coldsolutionsti.com` (DNS en Cloudflare, conectado al Static Site de Render).
+- **Mercado:** Perú, Lima (hora `America/Lima`). Expansión futura a Sudamérica.
 
-## 2. A quién se dirige (DEFINIDO + PROPUESTO)
-- **DEFINIDO:** empresas que "saben que algo podría funcionar mejor, pero no saben qué tecnología necesitan"; negocios con procesos manuales, exceso de Excel, falta de visibilidad de datos, necesidad de movilidad, interés en IA sin saber por dónde empezar, o sin presencia digital.
-- **PROPUESTO:** segmento objetivo = PYMEs y empresas medianas en fase de digitalización, con áreas operativas/logísticas/comerciales que generan datos dispersos. Los casos de éxito mostrados (transporte/logística, estética) sugieren un abanico amplio de industrias, no un nicho único.
-- **PENDIENTE:** confirmar industrias prioritarias para ads/SEO (¿todas las PYME o sectores específicos como logística, salud/estética, retail?), ubicación geográfica objetivo (los números telefónicos sugieren Perú, pero no hay confirmación explícita en los documentos).
+## 2. Equipo y canales de contacto (DEFINIDO)
+| Persona / canal | Dato |
+|---|---|
+| Jonathan Vera Segura (Tecnología) | 945 430 381 · jhonvs2014@gmail.com |
+| Jimy Mallqui (Comercial) | 963 478 502 · jimymallqui@gmail.com |
+| Soporte TI / WhatsApp principal de la web | 992 609 046 |
+| Cuenta que envía las notificaciones | jcoldsolutionsj@gmail.com |
+| Bot de Telegram | `@ColdSolutions_Leads_bot` (grupo con Jonathan y Jimy) |
 
-## 3. Problema que resuelve (DEFINIDO)
-Actúa como puente entre "tengo un problema operativo" y "la solución tecnológica correcta", cubriendo un espectro desde automatizaciones puntuales hasta soluciones integrales, mediante un proceso consultivo: **Diagnóstico → Diseño → Implementación → Evolución**.
+> [!WARNING]
+> El número 945 430 358 que aparece en la web como "Tecnología" es un **error**. El correcto es **945 430 381**. Se corrige en el código en la fase de interfaz.
 
-## 4. Objetivo del proyecto (DEFINIDO por el brief del usuario)
-Construir, en esta primera fase, **una Landing Page de captación B2B** (no un CMS completo), con arquitectura preparada para evolucionar hacia un CMS en Django sin reconstruir el frontend. El sitio debe funcionar como sistema de adquisición: tráfico → landing → CTA → tracking → lead → CRM.
+## 3. A quién se dirige (DEFINIDO)
+- Microempresas, pequeños negocios, **personas independientes sin empresa** y PYMEs en digitalización.
+- Dolores típicos: procesos manuales, exceso de Excel, falta de visibilidad de datos, necesidad de movilidad, interés en IA sin saber por dónde empezar, sin presencia digital.
+- Consecuencia de diseño: el formulario **no debe exigir datos de empresa** (ver doc. 09).
 
-### Fuera de alcance en esta fase (DEFINIDO)
-- CMS funcional con panel de administración.
-- Integraciones reales con CRM, WhatsApp Business API, N8N o automatizaciones de notificación.
-- Blog funcional (puede dejarse como sección "preparada" sin contenido real).
-- Backend Django completo (solo se documenta la arquitectura futura).
+## 4. Objetivo del proyecto (DEFINIDO)
+Una web de captación que funcione como sistema de adquisición completo:
+```text
+Tráfico (Ads / orgánico) → Landing → Formulario → API → Postgres → n8n → Telegram + Gmail + Calendar → Seguimiento
+```
 
-## 5. Contradicciones detectadas entre documentos
-| # | Contradicción | Fuente A | Fuente B | Resolución propuesta |
-|---|---|---|---|---|
-| 1 | Número de WhatsApp vs. número "Soporte TI" | Infografía: WhatsApp = 992 609 046 | PDF: 992 609 046 etiquetado como "Soporte TI" (no como WhatsApp) | PROPUESTO: usar 992 609 046 como CTA de WhatsApp principal (coincide con la pieza más reciente/orientada a conversión), y usar 963 478 502 (Comercial) como número alternativo para formularios de cotización si se requiere un segundo canal. **PENDIENTE confirmación del cliente.** |
-| 2 | Nombre de marca "ColdSolutions" vs "ColdSolution" | Documento base: "ColdSolutions TI" | Logo en infografía/PDF: "COLDSOLUTION TI" (singular) | PROPUESTO: usar "ColdSolutions TI" en textos y metadata (coincide con el naming del proyecto y el documento base), pero **PENDIENTE verificar con el cliente cuál es la razón social/naming oficial**, ya que el logo gráfico usa singular. |
+### Dentro del alcance (actual)
+- Landing (ya construida) + páginas `/privacidad` y `/terminos`.
+- API propia FastAPI que guarda en **Postgres** con un modelo relacional (doc. 14).
+- Notificaciones vía **n8n**: Telegram, Gmail (con botón `wa.me`) y Google Calendar (doc. 09).
+- Tracking para Ads: GTM, GA4, UTM y `gclid` (doc. 07, 08).
+- Despliegue en Render + Cloudflare (doc. 17).
 
-## 6. Información faltante para SEO/Ads/Branding (PENDIENTE)
-- Dominio del sitio.
-- Dirección física / cobertura geográfica exacta.
-- Correo electrónico de contacto.
-- Redes sociales (Instagram, LinkedIn, Facebook, TikTok, YouTube — la infografía menciona un "LIVE" que sugiere presencia en alguna red, pero no se especifica cuál).
-- Paleta de colores en códigos hexadecimales exactos (solo existe referencia visual).
-- Testimonios de clientes con texto real (no existen citas de clientes en los documentos, solo nombres de dos proyectos).
-- Certificaciones o alianzas tecnológicas.
-- Métricas o estadísticas de impacto (años de experiencia, número de clientes, etc. — no deben inventarse).
+### Fuera de alcance (por ahora)
+- WhatsApp Business API de pago y librerías no oficiales de WhatsApp (riesgo de bloqueo del número).
+- CMS con panel de administración y blog.
+- Django (descartado; la arquitectura antigua está archivada en `docs/archivo/`).
 
-## 7. Oportunidades detectadas (PROPUESTO)
-- El enfoque "problema-primero" es un diferenciador claro y debe ser el eje narrativo del Hero y la sección de propuesta de valor.
-- Los 8 "dolores" de la infografía son contenido ya validado y listo para usarse como sección de calificación de leads ("¿esto te está pasando?").
-- El proceso de 5 pasos (con variantes en PDF e infografía) puede unificarse en una sola narrativa visual para toda la landing.
-- Los dos casos de éxito (JHT Transporte Logístico, Gianis Estética) son prueba social real y deben usarse aunque sea de forma breve, respetando que uno de los proyectos es "multiplataforma" (app + web) y el otro solo web.
+## 5. Contradicciones resueltas
+| Tema | Resolución |
+|---|---|
+| "ColdSolution" vs "ColdSolutions" | **ColdSolutions TI** (confirmado por el cliente, 2026-10-03) |
+| Teléfono de Tecnología | **945 430 381** (el 945 430 358 es un error) |
+| WhatsApp principal | 992 609 046 (se mantiene; confirmar si cambia) |
+
+## 6. Información aún faltante (PENDIENTE)
+- Horario de atención (necesario para los mensajes fuera de horario, doc. 09).
+- Dirección física, redes sociales, testimonios reales, métricas (no se inventan).

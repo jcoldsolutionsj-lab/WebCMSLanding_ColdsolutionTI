@@ -1,87 +1,52 @@
-# 15. IMPLEMENTATION GUIDE (para Gemini 3.1 Pro / Antigravity)
+---
+trigger: model_decision
+description: Guía de implementación por fases, con el estado actual del proyecto (qué está hecho y qué sigue).
+---
 
-## 1. Orden de lectura obligatorio
-Ver `matriz de dependencias` al final de este documento y en la respuesta principal del arquitecto. No comenzar a codificar sin haber leído los documentos 01 a 14.
+# 15. IMPLEMENTATION GUIDE (Fases)
 
-## 2. Fases de implementación sugeridas (PROPUESTO)
+> Actualizado: 2026-10-03 (Fase 0 completada).
 
-### Fase A — Fundaciones
-1. Inicializar el proyecto frontend según doc. 13 (estructura de carpetas, stack).
-2. Cargar el contenido real de doc. 02 en la capa `/content` (doc. 13 §4 / doc. 14), **sin inventar ni completar campos que están marcados PENDIENTE**.
-3. Implementar los tokens de diseño de doc. 04 (colores, tipografía) como variables globales (CSS variables o equivalente del stack elegido).
+## Fases del Proyecto
 
-### Fase B — Estructura y contenido visual
-4. Construir las secciones en el orden y con el contenido de doc. 03, sección por sección.
-5. Implementar el botón flotante de WhatsApp (doc. 06 §1) usando el número resuelto en doc. 01 §5 (**confirmar con el cliente antes de publicar**).
-6. Implementar el formulario de contacto/diagnóstico según doc. 09 §2 (frontend) — validación básica en cliente.
+### Fase 0: Diagnóstico y Contexto (COMPLETADA)
+- Reglas limpias.
+- Repositorio limpio (`.gitignore` corregido).
+- `GEMINI.md` raíz creado.
+- Toma de decisiones arquitectónicas (Render, Postgres, n8n).
 
-### Fase C — Backend mínimo de leads
-0. **Entorno ya existente (DEFINIDO):** el backend Python se ejecuta dentro del `.venv` ya creado por el equipo del proyecto, con todas las dependencias ya instaladas ahí. No crear un entorno virtual nuevo ni reinstalar paquetes ya presentes; activar el `.venv` existente antes de correr o agregar dependencias, y usar `pip freeze`/`requirements.txt` solo para registrar nuevas dependencias que se agreguen sobre ese entorno.
-7. Implementar el endpoint `POST /api/leads` según doc. 09 §4, incluyendo validación server-side, CAPTCHA y rate limiting (doc. 11).
-8. Conectar el formulario del frontend al endpoint, con manejo de estados de éxito/error (doc. 06 §4).
+### Fase 1: Base de Datos y Backend (EN ESPERA)
+1. Conectar FastAPI a PostgreSQL usando **SQLAlchemy** y **Alembic**.
+2. Crear la primera migración con las tablas `servicios`, `leads`, `leads_tracking` y `notificaciones_log`.
+3. Cargar la tabla `servicios` con los 9 registros iniciales mediante un seeder (doc. 02).
+4. Actualizar el endpoint `POST /api/leads` para guardar en las nuevas tablas.
+5. Preparar la llamada asíncrona al webhook de n8n.
+6. Guardar variables en un `.env`.
 
-### Fase D — Tracking
-9. Instalar GTM (doc. 07 §1) y configurar dataLayer para todos los eventos de doc. 06 §4.
-10. Configurar GA4, conversiones, y Meta Pixel (doc. 07 §2–§4).
-11. Implementar captura y persistencia de UTM (doc. 07 §5) antes de cualquier otro tag.
+### Fase 2: n8n y Notificaciones (FUTURA)
+1. Provisionar n8n con Docker.
+2. Crear flujo de n8n: Webhook → Telegram → Gmail → Calendar (doc. 09).
+3. Conectar el backend con n8n de forma segura usando un token.
 
-### Fase E — SEO técnico
-12. Implementar metadata, Schema.org, sitemap y robots.txt (doc. 05).
-13. Validar con Lighthouse y ajustar performance (doc. 10) hasta cumplir los objetivos de Core Web Vitals.
+### Fase 3: Ajustes de Interfaz y Formulario (FUTURA)
+1. Modificar el formulario en React (`ContactSection.tsx`) para incluir el selector de servicios traído de la API.
+2. Agregar campo de consentimiento y enlazar a las futuras páginas de legales.
+3. Asegurar que los campos opcionales/obligatorios coincidan con la regla 09.
+4. Corregir el teléfono "945 430 358" a "945 430 381" en toda la UI.
 
-### Fase F — Seguridad y hardening
-14. Aplicar headers de seguridad, CSP, HTTPS/HSTS (doc. 11).
-15. Auditoría manual: confirmar que ningún secreto quede expuesto en el bundle del frontend.
+### Fase 4: Tracking y UTM (FUTURA)
+1. Capturar y enviar `utm_*` y `gclid` al backend.
+2. Eventos de dataLayer (`form_submit` seguro, `click_whatsapp`, etc.).
 
-### Fase G — Validación final
-16. Revisar el checklist completo de doc. 16 antes de considerar el proyecto listo para producción.
+### Fase 5: Páginas Legales (FUTURA)
+1. Crear `/terminos` y `/privacidad` como páginas estáticas.
 
-### Fase H — Contenedorización y despliegue a Render
-17. Generar `requirements.txt` desde el `.venv` local (doc. 17 §5).
-18. Construir el Dockerfile y `docker-compose.yml` de desarrollo local según doc. 17 §2.
-19. Provisionar PostgreSQL en Render y aplicar las buenas prácticas de escalabilidad/concurrencia de doc. 17 §1.
-20. Crear el Web Service en Render, cargar variables de entorno (doc. 17 §3.2) y ejecutar migraciones en producción.
-21. Redactar el `README.md` real del repositorio siguiendo la estructura de doc. 17 §4.
+### Fase 6: Despliegue en Render (FUTURA)
+1. Crear Dockerfile para la API.
+2. Desplegar Static Site (Next.js) y Web Service (FastAPI) en Render.
+3. Correr migraciones en producción.
 
-## 3. Reglas no negociables durante la implementación
-- No inventar contenido (textos, servicios, cifras, testimonios) que no exista en docs. 01–02.
-- No implementar CMS, CRM ni integraciones marcadas como "futuro" en docs. 09 y 12.
-- Todo elemento marcado **PENDIENTE** debe quedar señalado (ej. comentario en el código o placeholder visible solo en entorno de desarrollo) para que el cliente lo confirme antes de producción — nunca debe llegar a producción un dato inventado para "rellenar" un pendiente.
-
-## 4. Matriz de dependencias entre documentos
-```text
-01_PROJECT_CONTEXT
-        ↓
-02_BUSINESS_CONTENT
-        ↓
-03_LANDING_STRUCTURE
-        ↓
-04_UX_UI_GUIDELINES
-        ↓
-05_SEO_STRATEGY
-        ↓
-06_CTA_CONVERSION_STRATEGY
-        ↓
-07_ANALYTICS_TRACKING
-        ↓
-08_ADS_INTEGRATION
-        ↓
-09_LEAD_FORM_CRM
-        ↓
-10_PERFORMANCE
-        ↓
-11_SECURITY
-        ↓
-12_DJANGO_CMS_ARCHITECTURE
-        ↓
-13_FRONTEND_ARCHITECTURE
-        ↓
-14_CONTENT_MODEL
-        ↓
-15_IMPLEMENTATION_GUIDE  (este documento)
-        ↓
-16_ACCEPTANCE_CRITERIA
-        ↓
-17_DEPLOYMENT_INFRASTRUCTURE
-```
-Nota: 14_CONTENT_MODEL depende conceptualmente de 02, 06, 09 y 12 (consolida sus entidades), por lo que puede consultarse en paralelo a 12–13 según se necesite. 17_DEPLOYMENT_INFRASTRUCTURE se consulta al final, pero define requisitos (PostgreSQL, Docker) que condicionan decisiones tomadas desde doc. 09 y doc. 12 — conviene una lectura temprana si el implementador ya sabe que el destino final es Render.
+## Reglas no negociables
+- No tocar producción sin autorización explícita.
+- Trabajar por fases, una conversación y rama por fase.
+- Todo lo PENDIENTE debe resolverse antes de subir a producción.

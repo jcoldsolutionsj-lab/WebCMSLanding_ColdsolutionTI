@@ -1,5 +1,6 @@
 ---
-trigger: always_on
+trigger: model_decision
+description: Contenido real del negocio (propuesta de valor, 8 dolores, 8 servicios oficiales y lista del formulario, casos de éxito, teléfonos). Leer antes de escribir textos o la lista de servicios.
 ---
 
 # 02. BUSINESS CONTENT — Contenido real extraído de las fuentes
@@ -48,6 +49,22 @@ Cierre de la sección (DEFINIDO): "El objetivo no es venderte una tecnología po
 
 *Nota:* la infografía resume estos mismos 8 servicios con íconos (Software & Sistemas, Desarrollo Web, Automatización & RPA, Datos & BI, Apps Móviles, IA Aplicada, Integración, Consultoría Tecnológica) — **coherente entre ambas fuentes, sin contradicción.**
 
+## 3bis. Lista oficial del selector "Servicio de interés" (DEFINIDO por el cliente, 2026-10-03)
+Es la lista cerrada del formulario. Se guarda como catálogo en la tabla `servicios` (doc. 14) con estos datos:
+
+| # | Nombre (etiqueta) | Descripción | Para qué sirve |
+|---|---|---|---|
+| 1 | Software & Sistemas | Sistemas empresariales, software a medida, módulos y plataformas. | Resolver procesos y centralizar operación. |
+| 2 | Web | Páginas corporativas, landing pages, CMS, portales y e-commerce. | Dar presencia, captación y canales digitales. |
+| 3 | Aplicaciones móviles | Apps Android y soluciones para equipos de campo. | Capturar y consultar información desde cualquier lugar. |
+| 4 | Automatización & RPA | Python, bots, tareas asistidas/desatendidas, procesos 24/7. | Eliminar tareas repetitivas y reducir errores. |
+| 5 | IA aplicada | Asistentes, agentes, consultas, clasificación y automatización con IA. | Aplicar IA donde exista un beneficio práctico. |
+| 6 | Datos & BI | ETL, SQL, Power BI, dashboards, KPIs y reportes. | Convertir datos dispersos en información útil. |
+| 7 | Integración tecnológica | APIs, bases de datos, sistemas y servicios cloud. | Hacer que distintas piezas trabajen juntas. |
+| 8 | Consultoría tecnológica | Diagnóstico, arquitectura, proyectos, DevOps y datos. | Definir antes de invertir y acompañar el proyecto. |
+
+**PROPUESTO (pendiente de aprobación):** opción 9 "Aún no lo sé, necesito orientación", coherente con el enfoque problema-primero.
+
 ## 4. Profundización por área destacada (DEFINIDO — PDF pág. 4)
 ### Automatización & RPA
 Evaluación de procesos repetitivos (descarga, copia, transformación, registro, envío de información) para convertirlos en automatización con Python/RPA. Incluye: procesamiento de archivos, consolidación de información, carga y actualización de sistemas, generación de reportes, envío de información, ejecuciones programadas, procesos asistidos o desatendidos.
@@ -94,5 +111,5 @@ Desarrollo de presencia digital y solución web profesional para un negocio de s
 
 ## 9. Datos de contacto por tipo de consulta (DEFINIDO, sujeto a la resolución de la contradicción del doc. 01)
 - Comercial: 963 478 502
-- Tecnología: 945 430 358
+- Tecnología: 945 430 381
 - Soporte TI / WhatsApp: 992 609 046
