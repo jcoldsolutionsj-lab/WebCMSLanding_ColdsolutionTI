@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import JSONB
 from database import Base
@@ -11,6 +12,8 @@ class Servicio(Base):
     descripcion = Column(Text, nullable=True)
     orden = Column(Integer, default=0)
     activo = Column(Boolean, default=True)
+
+    leads = relationship("Lead", back_populates="servicio")
 
 
 class Lead(Base):
@@ -29,6 +32,10 @@ class Lead(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
+    servicio = relationship("Servicio", back_populates="leads")
+    tracking = relationship("LeadTracking", back_populates="lead", uselist=False)
+    notificaciones = relationship("NotificacionLog", back_populates="lead")
+
 
 class LeadTracking(Base):
     __tablename__ = "leads_tracking"
@@ -40,6 +47,8 @@ class LeadTracking(Base):
     utm_term = Column(String(100), nullable=True)
     utm_content = Column(String(100), nullable=True)
     gclid = Column(String(255), nullable=True)
+
+    lead = relationship("Lead", back_populates="tracking")
 
 
 class NotificacionLog(Base):
@@ -53,3 +62,5 @@ class NotificacionLog(Base):
     error_detalle = Column(Text, nullable=True)
     exito = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    lead = relationship("Lead", back_populates="notificaciones")
