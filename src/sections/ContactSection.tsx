@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import styles from './ContactSection.module.css';
 import { MagneticButton } from '@/components/MagneticButton';
+import { getStoredUTMs, trackEvent } from '@/lib/analytics';
 
 interface Servicio {
   id: number;
@@ -57,17 +58,28 @@ export const ContactSection = () => {
     setStatus('loading');
     setErrorMessage('');
 
+    const utms = getStoredUTMs();
+
+    // 1. Disparar evento form_submit (intento de envío)
+    trackEvent('form_submit', {
+      servicio_id: formData.servicio_id,
+      has_company: !!formData.empresa,
+      has_email: !!formData.correo,
+      source: utms.utm_source,
+      campaign: utms.utm_campaign,
+    });
+
     try {
       const payload = {
         ...formData,
         servicio_id: parseInt(formData.servicio_id),
         captcha_token: 'dummy-token-for-now',
-        utm_source: typeof window !== 'undefined' ? sessionStorage.getItem('utm_source') : null,
-        utm_medium: typeof window !== 'undefined' ? sessionStorage.getItem('utm_medium') : null,
-        utm_campaign: typeof window !== 'undefined' ? sessionStorage.getItem('utm_campaign') : null,
-        utm_term: typeof window !== 'undefined' ? sessionStorage.getItem('utm_term') : null,
-        utm_content: typeof window !== 'undefined' ? sessionStorage.getItem('utm_content') : null,
-        gclid: typeof window !== 'undefined' ? sessionStorage.getItem('gclid') : null,
+        utm_source: utms.utm_source,
+        utm_medium: utms.utm_medium,
+        utm_campaign: utms.utm_campaign,
+        utm_term: utms.utm_term,
+        utm_content: utms.utm_content,
+        gclid: utms.gclid,
       };
 
       const response = await fetch('http://127.0.0.1:8000/api/leads', {
@@ -83,21 +95,28 @@ export const ContactSection = () => {
         throw new Error(errorData.detail || 'Error al enviar el formulario.');
       }
 
+      const responseData = await response.json();
+
       setStatus('success');
       setFormData({ nombre: '', empresa: '', telefono: '', correo: '', servicio_id: '', problema: '', consentimiento: false });
       
-      if (typeof window !== 'undefined' && (window as any).dataLayer) {
-        (window as any).dataLayer.push({ event: 'lead_created' });
-      }
+      // 2. Disparar evento de conversión principal lead_created
+      trackEvent('lead_created', {
+        lead_id: responseData.lead_id,
+        servicio_id: payload.servicio_id,
+        source: utms.utm_source,
+        campaign: utms.utm_campaign,
+      });
 
     } catch (error: any) {
       console.error('Submit error:', error);
       setStatus('error');
       setErrorMessage(error.message || 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
       
-      if (typeof window !== 'undefined' && (window as any).dataLayer) {
-        (window as any).dataLayer.push({ event: 'form_error' });
-      }
+      // 3. Disparar evento de error en formulario
+      trackEvent('form_error', {
+        error_message: error.message || 'Error de envío',
+      });
     }
   };
 

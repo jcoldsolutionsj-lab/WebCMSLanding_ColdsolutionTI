@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import styles from './FloatingWhatsApp.module.css';
 import { contactChannels } from '@/content';
+import { trackEvent } from '@/lib/analytics';
 
 const chatOptions = [
   {
@@ -284,6 +285,13 @@ export const FloatingWhatsApp = () => {
     e.preventDefault();
     if (!formData.name) return;
     
+    trackEvent('click_whatsapp', {
+      service: selectedService?.title,
+      sub_option: selectedSubOption,
+      company: formData.company,
+      has_email: !!formData.email,
+    });
+
     const finalMessage = buildFinalMessage();
     window.open(getWhatsAppLink(finalMessage), '_blank');
     
@@ -296,6 +304,10 @@ export const FloatingWhatsApp = () => {
   };
 
   const handleDirectWhatsApp = () => {
+    trackEvent('click_whatsapp', {
+      service: selectedService?.title || 'Directo',
+      direct: true,
+    });
     const msg = selectedService?.message || '¡Hola ColdSolution TI!';
     window.open(getWhatsAppLink(msg), '_blank');
   };

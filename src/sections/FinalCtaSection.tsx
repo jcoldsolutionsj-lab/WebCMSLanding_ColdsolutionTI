@@ -1,6 +1,9 @@
+'use client';
+
 import styles from './FinalCtaSection.module.css';
 import { closingMessages } from '@/content';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { trackEvent } from '@/lib/analytics';
 
 export const FinalCtaSection = () => {
   return (
@@ -11,7 +14,11 @@ export const FinalCtaSection = () => {
         </ScrollReveal>
         <ScrollReveal direction="up" delay={0.2}>
           <div className={styles.ctaGroup}>
-            <a href="#contacto" className={styles.primaryCta}>
+            <a 
+              href="#contacto" 
+              className={styles.primaryCta}
+              onClick={() => trackEvent('click_cta_final', { label: 'Escríbenos ahora' })}
+            >
               Escríbenos ahora
             </a>
           </div>

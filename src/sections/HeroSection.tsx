@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import styles from './HeroSection.module.css';
 import { ArrowRight, ShieldCheck, Zap, Target } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 // ─── Carousel Slides + Impact Stories ───────────────────────────────────────
 const SLIDES = [
@@ -309,6 +310,7 @@ export const HeroSection = () => {
                       mass: 0.75,
                       delay: 0,
                     }}
+                    onClick={() => trackEvent('click_cta_hero', { label: 'Solicitar información', slide: slide.eyebrow })}
                   >
                     <span>Solicitar información</span>
                     <ArrowRight size={18} aria-hidden="true" />
@@ -326,6 +328,7 @@ export const HeroSection = () => {
                       mass: 0.75,
                       delay: 0.18,
                     }}
+                    onClick={() => trackEvent('click_cta_hero', { label: 'Ver Niveles de Solución', slide: slide.eyebrow })}
                   >
                     Ver Niveles de Solución
                   </motion.a>

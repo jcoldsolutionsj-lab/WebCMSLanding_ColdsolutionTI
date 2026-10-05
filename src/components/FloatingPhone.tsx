@@ -13,6 +13,7 @@ import {
   Headphones
 } from 'lucide-react';
 import styles from './FloatingPhone.module.css';
+import { trackEvent } from '@/lib/analytics';
 
 const phoneChannels = [
   {
@@ -140,6 +141,7 @@ export const FloatingPhone = () => {
                       className={styles.callIconBtn}
                       title={`Llamar a ${channel.label} (${channel.phone})`}
                       aria-label={`Llamar a ${channel.label}`}
+                      onClick={() => trackEvent('click_call', { channel: channel.label, phone: channel.phone })}
                     >
                       <Phone size={15} />
                     </a>
@@ -150,6 +152,7 @@ export const FloatingPhone = () => {
                       className={styles.wsIconBtn}
                       title={`Escribir por WhatsApp a ${channel.label}`}
                       aria-label={`WhatsApp a ${channel.label}`}
+                      onClick={() => trackEvent('click_whatsapp', { channel: channel.label, phone: channel.phone })}
                     >
                       <MessageCircle size={15} />
                     </a>
