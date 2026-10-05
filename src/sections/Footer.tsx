@@ -41,7 +41,9 @@ export const Footer = () => {
         {/* Col 1: Brand & About Us Story */}
         <div className={styles.brandSection}>
           <div className={styles.brandLogoContainer}>
-            <BrandLogo animate={false} />
+            <a href="/" title="ColdSolutions TI" style={{ display: 'inline-block' }}>
+              <BrandLogo animate={false} />
+            </a>
           </div>
 
           {/* About Us Story Card */}
@@ -117,13 +119,13 @@ export const Footer = () => {
         <div className={styles.linksSection}>
           <h3 className={styles.sectionTitle}>Navegación</h3>
           <ul className={styles.linksList}>
-            <li><a href="#hero">Inicio</a></li>
-            <li><a href="#dolores">Problemas comunes</a></li>
-            <li><a href="#servicios">Servicios &amp; Capacidad</a></li>
-            <li><a href="#soluciones">Niveles de Solución</a></li>
-            <li><a href="#proceso">Proceso de Trabajo</a></li>
-            <li><a href="#casos-de-exito">Casos de Éxito</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="/#hero">Inicio</a></li>
+            <li><a href="/#dolores">Problemas comunes</a></li>
+            <li><a href="/#servicios">Servicios &amp; Capacidad</a></li>
+            <li><a href="/#soluciones">Niveles de Solución</a></li>
+            <li><a href="/#proceso">Proceso de Trabajo</a></li>
+            <li><a href="/#casos-de-exito">Casos de Éxito</a></li>
+            <li><a href="/#contacto">Contacto</a></li>
           </ul>
         </div>
 

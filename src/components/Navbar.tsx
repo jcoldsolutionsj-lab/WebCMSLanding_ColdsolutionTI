@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Menu, X, PhoneCall, ChevronDown } from 'lucide-react';
@@ -79,6 +80,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
+  const pathname = usePathname();
   const [activeId, setActiveId] = useState<string>('inicio');
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
@@ -90,8 +92,18 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
 
   const allIds = getAllIds(items);
 
-  // Scroll Spy
+  const getNavHref = useCallback((href: string) => {
+    if (pathname === '/') return href;
+    return href.startsWith('#') ? `/${href}` : href;
+  }, [pathname]);
+
+  // Scroll Spy (solo opera en la página principal '/')
   useEffect(() => {
+    if (pathname !== '/') {
+      setActiveId('');
+      return;
+    }
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
 
@@ -120,14 +132,22 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [allIds]);
+  }, [allIds, pathname]);
 
   const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
-    e.preventDefault();
-    setActiveId(id);
     setIsMobileOpen(false);
     setOpenDropdown(null);
     setMobileExpandedGroup(null);
+
+    // Si NO estamos en la página principal ('/'), navegar a la sección en home
+    if (pathname !== '/') {
+      e.preventDefault();
+      window.location.href = href.startsWith('#') ? `/${href}` : href;
+      return;
+    }
+
+    e.preventDefault();
+    setActiveId(id);
 
     const targetElement = document.querySelector(href);
     if (targetElement) {
@@ -154,8 +174,32 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
       };
 
       window.requestAnimationFrame(step);
+    } else {
+      window.location.href = href.startsWith('#') ? `/${href}` : href;
     }
-  }, []);
+  }, [pathname]);
+
+  // Click en el Logo: En subpáginas regresa a home; en home refresca o sube arriba
+  const handleBrandClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsMobileOpen(false);
+    setOpenDropdown(null);
+    setMobileExpandedGroup(null);
+
+    if (pathname === '/') {
+      if (window.scrollY <= 50 && !window.location.hash) {
+        window.location.reload();
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveId('inicio');
+        if (window.location.hash) {
+          window.history.pushState(null, '', '/');
+        }
+      }
+    } else {
+      window.location.href = '/';
+    }
+  }, [pathname]);
 
   // Desktop dropdown hover handlers
   const handleDropdownEnter = (id: string) => {
@@ -182,9 +226,9 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
       <div className={styles.container}>
         {/* Brand Logo */}
         <a
-          href="#hero"
+          href="/"
           className={styles.brand}
-          onClick={(e) => handleNavClick(e, '#hero', 'inicio')}
+          onClick={handleBrandClick}
         >
           <BrandLogo animate={true} />
         </a>
@@ -205,10 +249,10 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
                   onMouseLeave={hasChildren ? handleDropdownLeave : undefined}
                 >
                   <a
-                    href={item.href}
+                    href={getNavHref(item.href)}
                     className={`${styles.tabItem} ${isActive ? styles.tabItemActive : ''}`}
                     onClick={(e) => {
-                      if (hasChildren) {
+                      if (hasChildren && pathname === '/') {
                         e.preventDefault();
                         setOpenDropdown(isDropdownOpen ? null : item.id);
                       } else {
@@ -243,7 +287,7 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
                           {item.children!.map((child) => (
                             <a
                               key={child.id}
-                              href={child.href}
+                              href={getNavHref(child.href)}
                               className={`${styles.dropdownItem} ${activeId === child.id ? styles.dropdownItemActive : ''}`}
                               onClick={(e) => handleNavClick(e, child.href, child.id)}
                             >
@@ -263,7 +307,7 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
         {/* CTA Button */}
         <div className={styles.ctaWrapper}>
           <a
-            href="#contacto"
+            href={getNavHref('#contacto')}
             className={styles.headerCtaBtn}
             onClick={(e) => handleNavClick(e, '#contacto', 'contacto')}
           >
@@ -325,7 +369,7 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
                               {item.children!.map((child) => (
                                 <a
                                   key={child.id}
-                                  href={child.href}
+                                  href={getNavHref(child.href)}
                                   className={`${styles.mobileSubItem} ${activeId === child.id ? styles.mobileSubItemActive : ''}`}
                                   onClick={(e) => handleNavClick(e, child.href, child.id)}
                                 >
@@ -339,7 +383,7 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
                       </>
                     ) : (
                       <a
-                        href={item.href}
+                        href={getNavHref(item.href)}
                         className={`${styles.mobileNavItem} ${activeId === item.id ? styles.mobileNavItemActive : ''}`}
                         onClick={(e) => handleNavClick(e, item.href, item.id)}
                       >
@@ -353,7 +397,7 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
 
               {/* Mobile CTA */}
               <a
-                href="#contacto"
+                href={getNavHref('#contacto')}
                 className={styles.mobileCtaBtn}
                 onClick={(e) => handleNavClick(e, '#contacto', 'contacto')}
               >
