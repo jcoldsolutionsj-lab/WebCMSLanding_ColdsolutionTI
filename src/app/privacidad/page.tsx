@@ -23,7 +23,7 @@ export default function PrivacidadPage() {
           fontFamily: 'Arial, Helvetica, sans-serif',
           lineHeight: '1.6'
         }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem', borderBottom: '2px solid #e5e7eb', paddingBottom: '1rem' }}>
+          <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem', borderBottom: '2px solid #e5e7eb', paddingBottom: '1rem', textTransform: 'none', WebkitTextFillColor: 'initial' }}>
             Política de Privacidad
           </h1>
           <p style={{ fontSize: '0.9rem', color: '#6b7280', marginBottom: '2rem' }}>
@@ -33,7 +33,7 @@ export default function PrivacidadPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', fontSize: '1rem' }}>
             <p>En <strong>ColdSolutions TI</strong> respetamos tu privacidad. Esta política explica qué datos personales recopilamos a través de https://coldsolutionsti.com, para qué los usamos, con quién los compartimos y cómo puedes ejercer tus derechos.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>1. Quién es el responsable de tus datos</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>1. Quién es el responsable de tus datos</h2>
             <ul style={{ listStyleType: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
               <li><strong>Nombre comercial:</strong> ColdSolutions TI</li>
               <li><strong>RUC:</strong> 10482568811</li>
@@ -42,10 +42,10 @@ export default function PrivacidadPage() {
             </ul>
             <p>Estamos iniciando nuestras actividades y operamos actualmente como persona natural con negocio. Si en el futuro cambiamos de forma legal (por ejemplo, constituyendo una empresa), lo informaremos en esta misma página.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>2. Normativa aplicable</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>2. Normativa aplicable</h2>
             <p>Tratamos tus datos conforme a la <strong>Ley N.º 29733</strong>, Ley de Protección de Datos Personales del Perú, y su reglamento vigente.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>3. Qué datos recopilamos</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>3. Qué datos recopilamos</h2>
             <p><strong>Los que nos das tú</strong>, al completar el formulario de contacto: nombre, empresa, teléfono, correo electrónico, servicio de interés y el mensaje con la descripción de tu necesidad.</p>
             <p><strong>Los que recopilamos al visitar el sitio:</strong></p>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -54,7 +54,7 @@ export default function PrivacidadPage() {
               <li><strong>Información obtenida mediante cookies</strong> (ver sección 9).</li>
             </ul>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>4. Para qué usamos tus datos</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>4. Para qué usamos tus datos</h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <li>Responder tu consulta y preparar un diagnóstico o propuesta de servicios.</li>
               <li>Gestionar el contacto comercial y su seguimiento.</li>
@@ -62,10 +62,10 @@ export default function PrivacidadPage() {
               <li>Enviarte comunicaciones comerciales, solo si lo has consentido.</li>
             </ul>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>5. Cómo das tu consentimiento</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>5. Cómo das tu consentimiento</h2>
             <p>Al marcar la casilla del formulario y enviarlo, aceptas esta política y el tratamiento de tus datos para las finalidades indicadas. Puedes retirar tu consentimiento en cualquier momento escribiéndonos al correo indicado en la sección 1.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>6. Con quién compartimos tus datos</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>6. Con quién compartimos tus datos</h2>
             <p>No vendemos tus datos. Algunos proveedores los procesan por encargo nuestro para que el sitio y la atención funcionen:</p>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <li><strong>Google</strong> (Analytics, Tag Manager, Ads, Gmail y Calendar): medición, gestión de campañas y comunicaciones internas.</li>
@@ -75,7 +75,7 @@ export default function PrivacidadPage() {
             </ul>
             <p>Algunos de estos proveedores están fuera del Perú, por lo que tus datos pueden ser transferidos y tratados en otros países de forma segura.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>7. Cuánto tiempo conservamos tus datos</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>7. Cuánto tiempo conservamos tus datos</h2>
             <p>Conservamos los datos de contacto durante <strong>24 meses</strong> desde nuestra última comunicación contigo, o hasta que solicites su eliminación, lo que ocurra primero. Luego los eliminamos o anonimizamos, salvo que la ley nos obligue a conservarlos.</p>
 
             <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>8. Seguridad</h2>
