@@ -1,31 +1,47 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { trackEvent, captureAndPersistUTMs } from '@/lib/analytics';
 
-export const UtmTracker = () => {
+function UtmTrackerInternal() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!searchParams) return;
 
-    // Solo guardar si hay utm_source en la URL, o si es la primera vez que entra y no hay UTMs
-    const utmSource = searchParams.get('utm_source');
-    const hasUtms = !!utmSource;
+    const utms = captureAndPersistUTMs();
 
-    if (hasUtms) {
-      sessionStorage.setItem('utm_source', utmSource);
-      sessionStorage.setItem('utm_medium', searchParams.get('utm_medium') || '');
-      sessionStorage.setItem('utm_campaign', searchParams.get('utm_campaign') || '');
-      sessionStorage.setItem('utm_content', searchParams.get('utm_content') || '');
-      sessionStorage.setItem('utm_term', searchParams.get('utm_term') || '');
-    } else {
-      // Si no hay UTM en URL y no hay en session, marcar como organic/direct
-      if (!sessionStorage.getItem('utm_source')) {
-        sessionStorage.setItem('utm_source', 'direct_or_organic');
+    // Disparar evento de página vista atribuida
+    trackEvent('page_view_attributed', {
+      source: utms.utm_source,
+      medium: utms.utm_medium,
+      campaign: utms.utm_campaign,
+      gclid: utms.gclid,
+    });
+
+    // Tracking de scroll 75%
+    let scrollTracked = false;
+    const handleScroll = () => {
+      if (scrollTracked) return;
+      const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+      if (scrollPercent >= 0.75) {
+        scrollTracked = true;
+        trackEvent('scroll_75');
       }
-    }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [searchParams]);
 
   return null;
+}
+
+export const UtmTracker = () => {
+  return (
+    <Suspense fallback={null}>
+      <UtmTrackerInternal />
+    </Suspense>
+  );
 };
