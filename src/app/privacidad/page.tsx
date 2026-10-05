@@ -78,26 +78,26 @@ export default function PrivacidadPage() {
             <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>7. Cuánto tiempo conservamos tus datos</h2>
             <p>Conservamos los datos de contacto durante <strong>24 meses</strong> desde nuestra última comunicación contigo, o hasta que solicites su eliminación, lo que ocurra primero. Luego los eliminamos o anonimizamos, salvo que la ley nos obligue a conservarlos.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>8. Seguridad</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>8. Seguridad</h2>
             <p>Aplicamos medidas técnicas y organizativas razonables para proteger tus datos contra accesos no autorizados, pérdida o alteración. Ningún sistema es completamente seguro, pero trabajamos arduamente para reducir los riesgos.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>9. Cookies</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>9. Cookies</h2>
             <p>Usamos cookies y tecnologías similares para medir el uso del sitio y el rendimiento de nuestra publicidad (Google Analytics y Google Ads). Puedes bloquearlas o eliminarlas desde la configuración de tu navegador; si lo haces, algunas funciones de medición dejarán de operar, pero el sitio seguirá funcionando.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>10. Tus derechos (ARCO)</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>10. Tus derechos (ARCO)</h2>
             <p>Puedes solicitar Acceso, Rectificación, Cancelación y Oposición sobre tus datos personales, y retirar tu consentimiento. Para ejercerlos, escríbenos a <strong>privacidad@coldsolutionsti.com</strong> indicando tu nombre y qué solicitas. Te responderemos dentro de los plazos que establece la ley.</p>
             <p>Si consideras que no atendimos tu solicitud, puedes presentar un reclamo ante la Autoridad Nacional de Protección de Datos Personales del Perú.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>11. Menores de edad</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>11. Menores de edad</h2>
             <p>Este sitio no está dirigido a menores de 18 años y no recopilamos datos de menores de manera intencional.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>12. Mensajería (WhatsApp y Telegram)</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>12. Mensajería (WhatsApp y Telegram)</h2>
             <p>Si nos escribes por WhatsApp u otras plataformas de mensajería, también se aplican las políticas de privacidad de esas plataformas.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>13. Cambios en esta política</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>13. Cambios en esta política</h2>
             <p>Somos un negocio que recién comienza y esta política se irá actualizando a medida que crezcamos o cambien nuestros servicios o proveedores. Cada versión se publica aquí con su fecha y número de versión. Si hacemos un cambio importante, lo comunicaremos en el sitio.</p>
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937' }}>14. Contacto</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginTop: '1rem', color: '#1f2937', WebkitTextFillColor: 'initial', background: 'none', textTransform: 'none' }}>14. Contacto</h2>
             <p>Para cualquier consulta sobre esta política, contáctanos a: <strong>privacidad@coldsolutionsti.com</strong>.</p>
           </div>
         </div>
