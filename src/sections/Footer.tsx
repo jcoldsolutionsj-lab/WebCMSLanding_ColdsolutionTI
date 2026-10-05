@@ -165,9 +165,9 @@ export const Footer = () => {
         <div className={styles.bottomBar}>
           <p>&copy; {new Date().getFullYear()} ColdSolutions TI. Todos los derechos reservados.</p>
           <div className={styles.legalLinks}>
-            <a href="#contacto">Términos y condiciones</a>
+            <a href="/terminos">Términos y condiciones</a>
             <span className={styles.legalDot}>•</span>
-            <a href="#contacto">Política de privacidad</a>
+            <a href="/privacidad">Política de privacidad</a>
           </div>
         </div>
       </div>
