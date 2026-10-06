@@ -1,15 +1,8 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Globe,
   FileText,
   Phone,
-  Info,
-  X,
   MapPin,
-  Award,
   Sparkles
 } from 'lucide-react';
 import styles from './Footer.module.css';
@@ -17,21 +10,6 @@ import { contactChannels, closingMessages } from '@/content';
 import { BrandLogo } from '@/components/BrandLogo';
 
 export const Footer = () => {
-  const [showDomainTooltip, setShowDomainTooltip] = useState(false);
-
-  const handleDomainClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setShowDomainTooltip(prev => !prev);
-  };
-
-  useEffect(() => {
-    if (showDomainTooltip) {
-      const timer = setTimeout(() => {
-        setShowDomainTooltip(false);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showDomainTooltip]);
 
   return (
     <footer className={styles.container}>
@@ -66,52 +44,20 @@ export const Footer = () => {
             <div className={styles.metaRow}>
               <FileText size={14} className={styles.metaIcon} aria-hidden="true" />
               <span className={styles.metaLabel}>RUC:</span>
-              <span className={styles.metaValue}>10477365596</span>
+              <span className={styles.metaValue}>10482568811</span>
             </div>
 
-            {/* Domain with Interactive Tooltip */}
-            <div className={styles.domainWrapper}>
-              <button
-                onClick={handleDomainClick}
-                className={styles.domainBtn}
-                title="Haz clic para ver el estado del dominio"
-                type="button"
-              >
-                <Globe size={14} className={styles.metaIcon} aria-hidden="true" />
-                <span className={styles.domainText}>www.coldsolutionti.com</span>
-                <span className={styles.domainTag}>En proceso</span>
-              </button>
-
-              <AnimatePresence>
-                {showDomainTooltip && (
-                  <motion.div
-                    className={styles.tooltipCard}
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <div className={styles.tooltipHeader}>
-                      <div className={styles.tooltipTitleGroup}>
-                        <Info size={15} className={styles.tooltipIcon} />
-                        <span>Dominio en preparación</span>
-                      </div>
-                      <button
-                        onClick={() => setShowDomainTooltip(false)}
-                        className={styles.tooltipCloseBtn}
-                        aria-label="Cerrar notificación"
-                        type="button"
-                      >
-                        <X size={13} />
-                      </button>
-                    </div>
-                    <p className={styles.tooltipBody}>
-                      Actualmente estamos adquiriendo y vinculando el dominio <strong>www.coldsolutionti.com</strong>. ¡Muy pronto estará 100% visible en línea!
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            {/* Domain Link */}
+            <a
+              href="https://coldsolutionsti.com"
+              className={styles.domainBtn}
+              title="Sitio web oficial de ColdSolutions TI"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Globe size={14} className={styles.metaIcon} aria-hidden="true" />
+              <span className={styles.domainText}>https://coldsolutionsti.com</span>
+            </a>
           </div>
         </div>
 
