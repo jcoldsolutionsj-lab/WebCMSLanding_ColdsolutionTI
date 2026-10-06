@@ -43,6 +43,7 @@ export const metadata: Metadata = {
 
 import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
 import { CursorGlow } from "@/components/CursorGlow";
+import { ThemeProvider } from "@/components/theme";
 
 export default function RootLayout({
   children,
@@ -50,10 +51,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={inter.variable}>
+    <html lang="es" className={inter.variable} data-theme="dark" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/logoCompleto.png" type="image/png" />
         <link rel="apple-touch-icon" href="/images/logoCompleto.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('coldsolution_theme') || 'dark';
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              })();
+            `,
+          }}
+        />
         {/* Google Tag Manager - PENDIENTE: Reemplazar GTM-XXXXXXX con ID real */}
         <Script
           id="gtm-script"
@@ -70,18 +85,20 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <CursorGlow />
-        <ScrollProgressIndicator />
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
-        {children}
+        <ThemeProvider>
+          <CursorGlow />
+          <ScrollProgressIndicator />
+          {/* Google Tag Manager (noscript) */}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            ></iframe>
+          </noscript>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

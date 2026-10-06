@@ -6,6 +6,7 @@ import styles from './Navbar.module.css';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Menu, X, PhoneCall, ChevronDown } from 'lucide-react';
 import { BrandLogo } from '@/components/BrandLogo';
+import { ThemeToggle } from '@/components/theme';
 
 export interface NavChild {
   id: string;
@@ -304,8 +305,9 @@ export const Navbar: React.FC<NavbarProps> = ({ items = defaultNavItems }) => {
           </div>
         </nav>
 
-        {/* CTA Button */}
+        {/* CTA Button & Theme Toggle */}
         <div className={styles.ctaWrapper}>
+          <ThemeToggle />
           <a
             href={getNavHref('#contacto')}
             className={styles.headerCtaBtn}

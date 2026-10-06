@@ -46,16 +46,17 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ className = '', animate = 
       <span style={{
         display: 'inline-flex',
         alignItems: 'center',
-        color: '#ffffff',
+        color: 'var(--text-main, #ffffff)',
         fontWeight: 800,
         fontSize: '1.25rem',
         letterSpacing: '-0.02em',
         fontFamily: 'var(--font-inter), system-ui, sans-serif',
         lineHeight: 1,
         whiteSpace: 'nowrap',
+        transition: 'color 0.3s ease',
       }}>
         ColdSolutions{' '}
-        <span style={{ color: '#1ea7ff' }}>TI</span>
+        <span style={{ color: 'var(--accent-primary, #1ea7ff)' }}>TI</span>
       </span>
     </div>
   );
