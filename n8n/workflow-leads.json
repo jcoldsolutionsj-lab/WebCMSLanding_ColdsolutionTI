@@ -1,0 +1,70 @@
+{
+  "name": "ColdSolutions Leads - Backend Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leads",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-1",
+      "name": "Webhook Leads",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ],
+      "webhookId": "leads",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "creds-header-1",
+          "name": "Header Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "-5302237975",
+        "text": "=🚀 *¡NUEVO LEAD RECIBIDO!*\n\n*Nombre:* {{ $json.body.nombre }}\n*Empresa:* {{ $json.body.empresa || 'No especificada' }}\n*Teléfono:* {{ $json.body.telefono }}\n*Correo:* {{ $json.body.correo || 'No especificado' }}\n\n*Problema:*\n_{{ $json.body.problema }}_",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "telegram-1",
+      "name": "Aviso Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "creds-telegram-1",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Leads": {
+      "main": [
+        [
+          {
+            "node": "Aviso Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2"
+}

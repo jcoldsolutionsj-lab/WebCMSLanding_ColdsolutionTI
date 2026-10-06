@@ -120,12 +120,49 @@ def verify_captcha(token: str) -> bool:
         return False
     return True
 
-def send_to_n8n_background(lead_id: int, payload: dict):
-    # PENDIENTE: Fase 2 - Implementar llamada HTTP asíncrona real a n8n
-    # Aquí irá un requests.post() o httpx.AsyncClient() para llamar al webhook
-    # y luego guardar el resultado en models.NotificacionLog
-    logger.info(f"Simulando envío a n8n para lead_id={lead_id}: {payload}")
-    pass
+import httpx
+from database import SessionLocal
+
+async def send_to_n8n_background(lead_id: int, payload: dict):
+    n8n_url = os.getenv("N8N_WEBHOOK_URL", "http://localhost:5678/webhook/leads")
+    n8n_token = os.getenv("N8N_WEBHOOK_TOKEN", "super_secret_token_123")
+    
+    headers = {"X-API-Key": n8n_token}
+    db = SessionLocal()
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(n8n_url, json=payload, headers=headers, timeout=10.0)
+            
+            exito = response.status_code in (200, 201)
+            
+            if lead_id != 999:
+                log = models.NotificacionLog(
+                    lead_id=lead_id,
+                    canal="webhook_n8n",
+                    payload_enviado=payload,
+                    respuesta_http=response.status_code,
+                    error_detalle=response.text if not exito else None,
+                    exito=exito
+                )
+                db.add(log)
+                db.commit()
+            logger.info(f"Envío a n8n para lead_id={lead_id}: {'EXITO' if exito else 'FALLO'}, response: {response.text}")
+    except Exception as e:
+        logger.error(f"Error conectando a n8n para lead_id={lead_id}: {e}")
+        if lead_id != 999:
+            log = models.NotificacionLog(
+                lead_id=lead_id,
+                canal="webhook_n8n",
+                payload_enviado=payload,
+                respuesta_http=None,
+                error_detalle=str(e),
+                exito=False
+            )
+            db.add(log)
+            db.commit()
+    finally:
+        db.close()
 
 # ---- Endpoints ----
 
