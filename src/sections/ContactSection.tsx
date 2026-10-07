@@ -45,7 +45,8 @@ export const ContactSection = () => {
 
   // Fetch servicios al cargar el componente
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/servicios')
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+    fetch(`${apiUrl}/api/servicios`)
       .then(res => res.json())
       .then(data => setServicios(data))
       .catch(err => console.error("Error al cargar servicios:", err));
@@ -85,7 +86,8 @@ export const ContactSection = () => {
         gclid: utms.gclid,
       };
 
-      const response = await fetch('http://127.0.0.1:8000/api/leads', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+      const response = await fetch(`${apiUrl}/api/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

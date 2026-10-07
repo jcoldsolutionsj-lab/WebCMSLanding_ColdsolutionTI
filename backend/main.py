@@ -30,9 +30,19 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS
+cors_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://coldsolutionsti.com",
+    "https://www.coldsolutionsti.com",
+]
+env_origins = os.getenv("ALLOWED_ORIGINS")
+if env_origins:
+    cors_origins.extend([o.strip() for o in env_origins.split(",") if o.strip()])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://coldsolutionsti.com"],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],

@@ -10,8 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://coldsolutionsti.com"),
   title: "ColdSolutions TI | Soluciones tecnológicas para digitalizar tu negocio",
   description: "Automatización, software a medida, datos e IA para tu empresa. Cuéntanos tu problema y te ayudamos a encontrar la solución tecnológica adecuada.",
+  alternates: {
+    canonical: "https://coldsolutionsti.com",
+  },
   icons: {
     icon: "/images/logoCompleto.png",
     shortcut: "/images/logoCompleto.png",
@@ -20,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ColdSolutions TI | Soluciones tecnológicas para digitalizar tu negocio",
     description: "Automatización, software a medida, datos e IA para tu empresa.",
-    url: "https://coldsolutionsti.com", // PENDIENTE: Reemplazar por dominio real
+    url: "https://coldsolutionsti.com",
     siteName: "ColdSolutions TI",
     images: [
       {
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
         alt: "ColdSolutions TI - Soluciones Tecnológicas",
       }
     ],
-    locale: "es_PE", // PENDIENTE: Confirmar país
+    locale: "es_PE",
     type: "website",
   },
   twitter: {
