@@ -14,6 +14,7 @@ import {
   Clock,
   Briefcase
 } from 'lucide-react';
+import { Turnstile } from '@marsidev/react-turnstile';
 import styles from './ContactSection.module.css';
 import { MagneticButton } from '@/components/MagneticButton';
 import { getStoredUTMs, trackEvent } from '@/lib/analytics';
@@ -37,6 +38,7 @@ export const ContactSection = () => {
     consentimiento: false,
   });
   
+  const [captchaToken, setCaptchaToken] = useState<string>('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -73,7 +75,7 @@ export const ContactSection = () => {
       const payload = {
         ...formData,
         servicio_id: parseInt(formData.servicio_id),
-        captcha_token: 'dummy-token-for-now',
+        captcha_token: captchaToken || 'dummy-token-for-now',
         utm_source: utms.utm_source,
         utm_medium: utms.utm_medium,
         utm_campaign: utms.utm_campaign,
@@ -298,6 +300,14 @@ export const ContactSection = () => {
                 <label htmlFor="consentimiento">
                   Acepto las <a href="/privacidad" target="_blank" rel="noopener noreferrer">políticas de privacidad</a> y el tratamiento de mis datos. *
                 </label>
+              </div>
+              
+              <div style={{ margin: '15px 0' }}>
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+                  onSuccess={(token) => setCaptchaToken(token)}
+                  options={{ theme: 'dark' }}
+                />
               </div>
               
               {status === 'error' && (

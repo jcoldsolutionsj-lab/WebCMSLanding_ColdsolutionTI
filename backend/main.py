@@ -113,12 +113,30 @@ class MetricasResumenOut(BaseModel):
 
 # ---- Utilities ----
 
-def verify_captcha(token: str) -> bool:
-    # PENDIENTE: Integrar verificación real con Google reCAPTCHA / hCaptcha
-    # Por ahora, validación stub que acepta cualquier token no vacío
-    if not token or token == "invalid":
+async def verify_captcha(token: str) -> bool:
+    secret_key = os.getenv("TURNSTILE_SECRET_KEY")
+    if not secret_key:
+        logger.warning("TURNSTILE_SECRET_KEY no configurada. Saltando verificación (Modo Dev).")
+        # En desarrollo sin llave, permitimos pasar si mandan un token dummy
+        return bool(token)
+        
+    url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+    data = {
+        "secret": secret_key,
+        "response": token
+    }
+    try:
+        import httpx
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, data=data)
+            result = response.json()
+            if not result.get("success", False):
+                logger.error(f"Turnstile rechazado: {result.get('error-codes')}")
+                return False
+            return True
+    except Exception as e:
+        logger.error(f"Error HTTP verificando Turnstile: {e}")
         return False
-    return True
 
 import httpx
 from database import SessionLocal
@@ -176,7 +194,7 @@ def get_servicios(db: Session = Depends(get_db)):
 @limiter.limit("5/minute")
 async def create_lead(request: Request, lead: LeadCreate, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     # 1. Validación de CAPTCHA
-    if not verify_captcha(lead.captcha_token):
+    if not await verify_captcha(lead.captcha_token):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Validación de CAPTCHA fallida."
