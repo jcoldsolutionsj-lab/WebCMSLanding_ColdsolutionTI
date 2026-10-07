@@ -12,7 +12,8 @@ import {
   CheckCircle2, 
   ShieldCheck, 
   Clock,
-  Briefcase
+  Briefcase,
+  Loader2
 } from 'lucide-react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import styles from './ContactSection.module.css';
@@ -94,7 +95,13 @@ export const ContactSection = () => {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'Error al enviar el formulario.');
+        const detailMsg = errorData.detail || 'Error al enviar el formulario.';
+        setStatus('error');
+        setErrorMessage(detailMsg);
+        trackEvent('form_error', {
+          error_message: detailMsg,
+        });
+        return;
       }
 
       const responseData = await response.json();
@@ -111,13 +118,13 @@ export const ContactSection = () => {
       });
 
     } catch (error: any) {
-      console.error('Submit error:', error);
+      console.error('Submit network error:', error);
       setStatus('error');
-      setErrorMessage(error.message || 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
+      setErrorMessage('Error de conexión con el servidor. Por favor, intenta de nuevo.');
       
       // 3. Disparar evento de error en formulario
       trackEvent('form_error', {
-        error_message: error.message || 'Error de envío',
+        error_message: error.message || 'Error de conexión',
       });
     }
   };
@@ -314,9 +321,22 @@ export const ContactSection = () => {
                 <div className={styles.errorMessage}>{errorMessage}</div>
               )}
               
-              <MagneticButton type="submit" className={styles.submitButton} disabled={status === 'loading'}>
-                <span>{status === 'loading' ? 'Enviando Solicitud...' : 'Solicitar diagnóstico gratuito'}</span>
-                <Send size={18} className={styles.sendIcon} />
+              <MagneticButton 
+                type="submit" 
+                className={styles.submitButton} 
+                disabled={status === 'loading'}
+              >
+                {status === 'loading' ? (
+                  <>
+                    <Loader2 size={18} className={styles.spinner} />
+                    <span>Enviando Solicitud...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Solicitar diagnóstico gratuito</span>
+                    <Send size={18} className={styles.sendIcon} />
+                  </>
+                )}
               </MagneticButton>
             </form>
           )}

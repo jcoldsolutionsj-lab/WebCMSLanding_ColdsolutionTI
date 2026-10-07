@@ -9,6 +9,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import os
 import logging
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 
 import models
@@ -207,11 +208,33 @@ async def create_lead(request: Request, lead: LeadCreate, background_tasks: Back
             detail="Debe aceptar las políticas de privacidad."
         )
 
-    # 3. Guardar Lead
-    try:
-        # Extraer IP (muy básico, puede mejorar si hay proxies, ej. x-forwarded-for)
-        client_ip = request.client.host if request.client else "unknown"
+    # 3. Deduplicación de Leads (ventana de 5 minutos por correo/teléfono + IP)
+    client_ip = request.client.host if request.client else "unknown"
+    cinco_minutos_atras = datetime.now(timezone.utc) - timedelta(minutes=5)
 
+    lead_reciente_query = db.query(models.Lead).filter(
+        models.Lead.created_at >= cinco_minutos_atras,
+        models.Lead.consentimiento_ip == client_ip
+    )
+
+    filtros_contacto = []
+    if lead.correo:
+        filtros_contacto.append(models.Lead.correo == lead.correo)
+    if lead.telefono:
+        filtros_contacto.append(models.Lead.telefono == lead.telefono)
+
+    if filtros_contacto:
+        from sqlalchemy import or_
+        lead_reciente = lead_reciente_query.filter(or_(*filtros_contacto)).first()
+        if lead_reciente:
+            logger.warning(f"Lead duplicado detectado para teléfono={lead.telefono} o correo={lead.correo} desde IP={client_ip}")
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Ya hemos recibido tu solicitud hace un momento. Nos pondremos en contacto contigo a la brevedad."
+            )
+
+    # 4. Guardar Lead
+    try:
         db_lead = models.Lead(
             nombre=lead.nombre,
             empresa=lead.empresa,
