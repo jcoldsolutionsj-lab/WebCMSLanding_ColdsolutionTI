@@ -1,0 +1,80 @@
+# Render Blueprint Specification (Infrastructure as Code)
+# Despliegue automatizado en 1 clic para ColdSolutions TI
+
+services:
+  # ========================================================
+  # 1. Frontend: Next.js (Static Site - 100% Gratis en CDN)
+  # ========================================================
+  - type: web
+    name: web-coldsolutions
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./out
+    domains:
+      - coldsolutionsti.com
+      - www.coldsolutionsti.com
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXT_PUBLIC_TURNSTILE_SITE_KEY
+        value: 0x4AAAAAAFP7bTMNbM6Aad8K
+      - key: NEXT_PUBLIC_GTM_ID
+        value: GTM-XXXXXXX
+
+  # ========================================================
+  # 2. Backend: FastAPI Leads API (Docker Web Service)
+  # ========================================================
+  - type: web
+    name: api-coldsolutions
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: TURNSTILE_SECRET_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://coldsolutionsti.com,https://www.coldsolutionsti.com
+      - key: N8N_WEBHOOK_URL
+        sync: false
+      - key: N8N_WEBHOOK_TOKEN
+        value: SecretColdSolutionstijimijonathan03102026
+
+  # ========================================================
+  # 3. Automatización: n8n (Docker Web Service con Postgres)
+  # ========================================================
+  - type: web
+    name: n8n-coldsolutions
+    runtime: docker
+    plan: free
+    rootDir: n8n
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: N8N_PORT
+        value: 10000
+      - key: N8N_PROTOCOL
+        value: https
+      - key: WEBHOOK_URL
+        sync: false
+      - key: GENERIC_TIMEZONE
+        value: America/Lima
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_DATABASE
+        value: colsolutionsti_03102026
+      - key: DB_POSTGRESDB_HOST
+        value: dpg-d8pn72jtqb8s738bl1d0-a.virginia-postgres.render.com
+      - key: DB_POSTGRESDB_PORT
+        value: 5432
+      - key: DB_POSTGRESDB_USER
+        value: db_jht_q05l_user
+      - key: DB_POSTGRESDB_PASSWORD
+        sync: false
+      - key: DB_POSTGRESDB_SCHEMA
+        value: n8n
