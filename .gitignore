@@ -47,7 +47,15 @@ next-env.d.ts
 
 
 # Backend Python
+*.py[cod]
+*$py.class
+**/__pycache__/
 backend/.venv/
-backend/__pycache__/
+.venv/
 backend/*.db
 !backend/.env.example
+!.env.example
+
+# n8n local data
+n8n/*.sqlite
+n8n/.n8n/

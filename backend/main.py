@@ -24,8 +24,18 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="ColdSolutions TI - Leads API")
 
+# IP resolution supporting reverse proxies (Render, Cloudflare)
+def get_client_ip(request: Request) -> str:
+    cf_ip = request.headers.get("cf-connecting-ip")
+    if cf_ip:
+        return cf_ip.strip()
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
 # Rate limiting
-limiter = Limiter(key_func=get_remote_address)
+limiter = Limiter(key_func=get_client_ip)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -125,10 +135,14 @@ class MetricasResumenOut(BaseModel):
 # ---- Utilities ----
 
 async def verify_captcha(token: str) -> bool:
-    secret_key = os.getenv("TURNSTILE_SECRET_KEY")
+    secret_key = os.getenv("TURNSTILE_SECRET_KEY") or os.getenv("TURNSTILE_SECRET_KEY_coldsolutionsti")
+    is_production = os.getenv("ENVIRONMENT", "development").lower() in ("production", "prod")
+
     if not secret_key:
+        if is_production:
+            logger.error("TURNSTILE_SECRET_KEY no configurada en entorno de producción. Rechazando por seguridad.")
+            return False
         logger.warning("TURNSTILE_SECRET_KEY no configurada. Saltando verificación (Modo Dev).")
-        # En desarrollo sin llave, permitimos pasar si mandan un token dummy
         return bool(token)
         
     url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
@@ -154,7 +168,7 @@ from database import SessionLocal
 
 async def send_to_n8n_background(lead_id: int, payload: dict):
     n8n_url = os.getenv("N8N_WEBHOOK_URL", "http://localhost:5678/webhook/leads")
-    n8n_token = os.getenv("N8N_WEBHOOK_TOKEN", "super_secret_token_123")
+    n8n_token = os.getenv("N8N_WEBHOOK_TOKEN") or os.getenv("N8N_AUTH_TOKEN", "super_secret_token_123")
     
     headers = {"X-API-Key": n8n_token}
     db = SessionLocal()
@@ -219,7 +233,7 @@ async def create_lead(request: Request, lead: LeadCreate, background_tasks: Back
         )
 
     # 3. Deduplicación de Leads (ventana de 5 minutos por correo/teléfono + IP)
-    client_ip = request.client.host if request.client else "unknown"
+    client_ip = get_client_ip(request)
     cinco_minutos_atras = datetime.now(timezone.utc) - timedelta(minutes=5)
 
     lead_reciente_query = db.query(models.Lead).filter(
