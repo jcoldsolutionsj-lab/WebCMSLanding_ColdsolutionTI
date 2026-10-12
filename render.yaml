@@ -78,3 +78,9 @@ services:
         sync: false
       - key: DB_POSTGRESDB_SCHEMA
         value: n8n
+      - key: DB_POSTGRESDB_SSL_ENABLED
+        value: true
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: false
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
