@@ -19,7 +19,7 @@ services:
       - key: NEXT_PUBLIC_TURNSTILE_SITE_KEY
         value: 0x4AAAAAAFP7bTMNbM6Aad8K
       - key: NEXT_PUBLIC_GTM_ID
-        value: GTM-XXXXXXX
+        value: GTM-MN398M78
 
   # ========================================================
   # 2. Backend: FastAPI Leads API (Docker Web Service)
