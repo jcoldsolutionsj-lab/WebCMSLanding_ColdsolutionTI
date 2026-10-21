@@ -13,6 +13,32 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://coldsolutionsti.com"),
   title: "ColdSolutions TI | Soluciones tecnológicas para digitalizar tu negocio",
   description: "Automatización, software a medida, datos e IA para tu empresa. Cuéntanos tu problema y te ayudamos a encontrar la solución tecnológica adecuada.",
+  keywords: [
+    "automatización de procesos",
+    "software a medida Perú",
+    "desarrollo web Lima",
+    "inteligencia artificial empresas",
+    "Business Intelligence Perú",
+    "Power BI dashboards",
+    "RPA Python",
+    "consultoría TI Lima",
+    "transformación digital empresas",
+    "ColdSolutions TI"
+  ],
+  authors: [{ name: "ColdSolutions TI", url: "https://coldsolutionsti.com" }],
+  creator: "ColdSolutions TI",
+  publisher: "ColdSolutions TI",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   alternates: {
     canonical: "https://coldsolutionsti.com",
   },
@@ -45,6 +71,126 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://coldsolutionsti.com/#organization",
+      "name": "ColdSolutions TI",
+      "url": "https://coldsolutionsti.com",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://coldsolutionsti.com/#logo",
+        "url": "https://coldsolutionsti.com/images/logoCompleto.png",
+        "caption": "ColdSolutions TI"
+      },
+      "image": "https://coldsolutionsti.com/images/logoCompleto.png",
+      "description": "Empresa peruana de soluciones tecnológicas: desarrollo de software a medida, automatización con RPA, Business Intelligence, Inteligencia Artificial y consultoría TI.",
+      "taxID": "10482568811",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lima",
+        "addressCountry": "PE"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+51-963-478-502",
+          "contactType": "sales",
+          "areaServed": "PE",
+          "availableLanguage": ["es"]
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+51-945-430-381",
+          "contactType": "technical support",
+          "areaServed": "PE",
+          "availableLanguage": ["es"]
+        }
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://coldsolutionsti.com/#service",
+      "name": "ColdSolutions TI - Servicios Tecnológicos",
+      "url": "https://coldsolutionsti.com",
+      "parentOrganization": {
+        "@id": "https://coldsolutionsti.com/#organization"
+      },
+      "priceRange": "$$",
+      "image": "https://coldsolutionsti.com/images/logoCompleto.png",
+      "telephone": "+51-963-478-502",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lima",
+        "addressCountry": "PE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -12.046374,
+        "longitude": -77.042793
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de Tecnología",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Software & Sistemas a Medida",
+              "description": "Desarrollo de sistemas empresariales, plataformas web y módulos personalizados."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Automatización & RPA",
+              "description": "Automatización de flujos repetitivos, procesamiento de archivos e integración de sistemas con Python."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Datos & Business Intelligence",
+              "description": "ETL, bases de datos SQL, tableros interactivos Power BI y KPIs para toma de decisiones."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Inteligencia Artificial Aplicada",
+              "description": "Implementación de agentes inteligentes, asistentes y automatizaciones para optimizar procesos de negocio."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Desarrollo Web & Landing Pages",
+              "description": "Sitios web corporativos, landings comerciales y portales modernos optimizados para conversión y SEO."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://coldsolutionsti.com/#website",
+      "url": "https://coldsolutionsti.com",
+      "name": "ColdSolutions TI",
+      "publisher": {
+        "@id": "https://coldsolutionsti.com/#organization"
+      },
+      "inLanguage": "es-PE"
+    }
+  ]
+};
+
 import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
 import { CursorGlow } from "@/components/CursorGlow";
 import { ThemeProvider } from "@/components/theme";
@@ -59,6 +205,11 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/logoCompleto.png" type="image/png" />
         <link rel="apple-touch-icon" href="/images/logoCompleto.png" />
+        {/* Schema.org Structured Data (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
