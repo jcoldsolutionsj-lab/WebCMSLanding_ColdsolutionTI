@@ -118,18 +118,16 @@ const jsonLd = {
       "parentOrganization": {
         "@id": "https://coldsolutionsti.com/#organization"
       },
-      "priceRange": "$$",
       "image": "https://coldsolutionsti.com/images/logoCompleto.png",
       "telephone": "+51-963-478-502",
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Perú"
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lima",
         "addressCountry": "PE"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -12.046374,
-        "longitude": -77.042793
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
