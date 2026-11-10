@@ -41,3 +41,16 @@ utm_term       (palabra clave, en campañas de búsqueda)
 ## 6. Consentimiento y privacidad (PROPUESTO, referencia cruzada doc. 11)
 - Banner de consentimiento de cookies antes de cargar tags no esenciales (GA4, Meta Pixel), acorde a buenas prácticas de Consent Mode de Google.
 - **PENDIENTE:** confirmar si aplica normativa local de protección de datos (ej. Ley de Protección de Datos Personales de Perú, si se confirma el mercado objetivo — ver doc. 05 §1).
+
+
+
+## 7. ESTADO REAL IMPLEMENTADO (actualizado 2026-10-25)
+Esta sección corrige lo que quedó distinto del plan de las secciones 1 a 6. Detalle operativo y pasos en `docs/PLAYBOOK_MARKETING_MEDICION.md`.
+
+- **GTM (§1): IMPLEMENTADO y VERIFICADO.** Contenedor `GTM-MN398M78`, cargado desde `src/app/layout.tsx` con `NEXT_PUBLIC_GTM_ID`.
+- **GA4 (§2): IMPLEMENTADO.** Propiedad "ColdSolutions TI", flujo web `ColdSolutions Web`, ID de medición `G-ZQYPDZDJ7P`. Las etiquetas de evento mapean así: `lead_created` → `generate_lead`; `click_whatsapp`, `click_call` y `scroll_75` con el mismo nombre.
+- **Diferencia con §2:** el plan decía que `form_submit` y `click_whatsapp` serían conversiones. En la práctica, **la única conversión es `lead_created`**; `click_whatsapp`, `click_call` y `scroll_75` son **solo analíticos** y no se configuran como conversiones de Ads. `form_submit` es un intento de envío, no un lead.
+- **Diferencia con §3 (Google Ads):** no se importan conversiones desde GA4. Se usa **la etiqueta de Google Ads (ID de conversión + etiqueta de conversión) disparada por el activador `lead_created`** en GTM. Para no contar dos veces el mismo lead, **no se debe importar `generate_lead` de GA4 a Google Ads como conversión** mientras exista esa etiqueta.
+- **Consentimiento (§6):** **no hay banner de cookies**. Decisión vigente: no se implementa mientras el mercado sea solo Perú. Reevaluar si se hacen campañas en la Unión Europea o el Reino Unido.
+- **Meta Pixel (§4): PENDIENTE.** No implementado.
+- **Eventos adicionales que emite la web y no estaban en el doc 06:** `click_cta_hero`, `click_cta_final`, `form_error`, `page_view_attributed`.

@@ -14,7 +14,7 @@ if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
 # Usaremos un schema específico "app" para no mezclar tablas con otros clientes en la BD compartida
 metadata = MetaData(schema="app")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_recycle=300)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base(metadata=metadata)

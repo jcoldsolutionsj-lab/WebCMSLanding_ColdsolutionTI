@@ -24,3 +24,14 @@ Los documentos no indican si se requieren landing pages específicas por campañ
 - [ ] UTM/gclid/fbclid persistidos hasta el envío del formulario.
 - [ ] Thank You state/página que dispara conversión.
 - [ ] Formulario funcional y validado (backend real, no solo frontend) para que las conversiones sean reales y no solo `form_start`.
+
+
+
+## 5. ESTADO REAL IMPLEMENTADO (actualizado 2026-10-25)
+- **Diferencia con §1 y §4:** el plan decía "importar conversiones desde GA4 y evitar doble tag". Se implementó el método directo: **etiqueta de conversión de Google Ads en GTM** disparada por `lead_created`. Se evita el doble conteo **no importando** la misma conversión desde GA4.
+- **Cuenta de Google Ads:** la etiqueta de Google es `AW-18501972554`. El resto de datos de la cuenta no se documentan aquí.
+- **Conversión creada:** categoría "Enviar formulario de clientes potenciales", origen "Sitio web", configuración manual con código, recuento **Una**, valor "mismo valor para cada conversión". VERIFICADO con Tag Assistant: la etiqueta se activó 1 vez al enviar un formulario de prueba.
+- **Checklist §4, estado hoy:** GTM instalado y publicado ✔ · GA4 con evento de lead ✔ (falta marcarlo como evento clave) · Meta Pixel ✘ PENDIENTE · UTM y `gclid` persistidos ✔ (`fbclid` PENDIENTE) · Estado de "gracias" que dispara la conversión ✔ (tras respuesta OK del backend) · Formulario con backend real ✔.
+- **Saldo:** Google Ads muestra el aviso de saldo agotado. Las campañas no se publican hasta recargar.
+- **Titular de facturación:** distinto al RUC que aparece en la web. No bloquea las campañas ni la medición; coordinar con el contador cómo se sustentan las facturas de publicidad.
+- **§3 (landings por campaña):** sigue PENDIENTE. Hoy todo el tráfico va a la página principal.

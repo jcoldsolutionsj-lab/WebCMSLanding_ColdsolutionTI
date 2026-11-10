@@ -36,3 +36,6 @@ La API guarda primero y avisa después: si n8n falla, el lead no se pierde y el 
 | Render, Docker, Cloudflare | `.agents/rules/17_DEPLOYMENT_INFRASTRUCTURE.md` |
 | Criterios de aceptación | `.agents/rules/16_ACCEPTANCE_CRITERIA.md` |
 | Auditoría de cada fase | workflow `/verificar` (`.agents/workflows/verificar.md`) |
+
+| Playbook de marketing y medición (reutilizable) | `docs/PLAYBOOK_MARKETING_MEDICION.md` |
+| Operación en producción (anti-sleep, horas de Render, incidentes) | `docs/OPERACION_Y_MANTENIMIENTO.md` |

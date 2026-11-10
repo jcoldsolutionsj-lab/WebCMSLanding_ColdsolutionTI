@@ -55,3 +55,12 @@ La estrategia SEO depende directamente del cumplimiento de Core Web Vitals (LCP,
 ## 9. Internal linking (PROPUESTO)
 - Menú de navegación ancla a cada sección (Servicios, Proceso, Casos, Contacto).
 - Footer con enlaces repetidos a secciones clave + datos de contacto (refuerzo semántico y de usabilidad).
+
+
+
+## 10. ESTADO REAL IMPLEMENTADO (actualizado 2026-10-25)
+- **Schema.org (§5):** implementado en `src/app/layout.tsx` con `Organization`, `ProfessionalService` (catálogo de 5 servicios con `areaServed: Perú`) y `WebSite`. **No** incluye coordenadas ni rango de precios, porque no hay dirección física confirmada ni datos reales para eso (quitados el 2026-10-25). Cuando el cliente confirme una dirección, se puede evaluar `LocalBusiness`.
+- **Diferencia con §5:** el catálogo del JSON-LD resume 5 líneas de servicio; el doc 02 define 8 servicios. Pendiente alinearlos con el contenido oficial.
+- **Metadata:** se agregaron `keywords`, `robots`/`googleBot`, `authors`. Las keywords no mejoran el posicionamiento en Google de forma relevante; el peso real está en el contenido de la página.
+- **Search Console (§7):** propiedad verificada, `sitemap.xml` enviado e indexación de la URL principal solicitada (2026-10-24). El aviso de "Página con redirección" para `http://` y `www` es normal.
+- **Pendiente (impacto alto):** páginas propias por servicio y preguntas frecuentes (`faqItems` sigue vacío), Perfil de Empresa de Google, Bing Webmaster Tools, imagen Open Graph 1200×630 propia (hoy se usa el logo) y medición de velocidad (el hero usa video de fondo).
